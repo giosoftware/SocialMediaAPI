@@ -28,7 +28,7 @@ const postSchema = new Schema({
     c: {
         type: [String],
         required: [true, 'el campo círculos es obligatorio'],
-        alias: 'circles'
+        alias: 'interests'
     },
     l: {
         type: Number,

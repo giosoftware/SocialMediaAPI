@@ -39,10 +39,10 @@ const userSchema = new Schema({
             ]
         },
     },
-    c: {
+    i: {
         type: [String],
         required: [true, 'el campo círculos es obligatorio'],
-        alias: 'circles'
+        alias: 'interests'
     },
     b: {
         type: [Schema.Types.ObjectId],

@@ -48,7 +48,7 @@ const update = (req, res) => {
         un: req.body.username,
         d: req.body.date,
         t: req.body.text,
-        c: req.body.circles,
+        c: req.body.interests,
         l: req.body.likes,
         lun: req.body.likesUsernames
     };

@@ -8,7 +8,7 @@ const create = (req, res) => {
         uid: req.body.userId,
         un: req.body.username,
         t: req.body.text,
-        c: req.body.circles
+        c: req.body.interests
     };
 
     Post.create(post)
@@ -47,7 +47,7 @@ const update = (req, res) => {
         uid: req.body.userId,
         un: req.body.username,
         t: req.body.text,
-        c: req.body.circles,
+        c: req.body.interests,
         l: req.body.likes,
         lun: req.body.likesUsernames
     };

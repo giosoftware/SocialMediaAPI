@@ -13,6 +13,15 @@ router.put("/:id", user.update);
 
 router.delete("/:id", user.del);
 
+router.post('/:id', user.addInterest);
+
+router.post('/:id', user.blockUser);
+
+router.post('/register', user.register);
+
+router.post('/login', user.login);
+
+router.post('/deregister', user.register);
 
 module.exports = router
 
