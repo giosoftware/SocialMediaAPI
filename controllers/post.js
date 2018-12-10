@@ -1,6 +1,5 @@
 'use strict';
 
-const connectionDB = require('../config/database.js');
 const Post = require('../models/post');
 
 const create = (req, res) => {
@@ -8,7 +7,7 @@ const create = (req, res) => {
         uid: req.body.userId,
         un: req.body.username,
         t: req.body.text,
-        c: req.body.interests
+        i: req.body.interests
     };
 
     Post.create(post)
@@ -47,7 +46,7 @@ const update = (req, res) => {
         uid: req.body.userId,
         un: req.body.username,
         t: req.body.text,
-        c: req.body.interests,
+        i: req.body.interests,
         l: req.body.likes,
         lun: req.body.likesUsernames
     };

@@ -1,6 +1,5 @@
 'use strict';
 
-const connectionDB = require('../config/database.js');
 const Wall = require('../models/wall');
 
 const create = (req, res) => {

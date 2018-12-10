@@ -41,7 +41,7 @@ const userSchema = new Schema({
     },
     i: {
         type: [String],
-        required: [true, 'el campo círculos es obligatorio'],
+        required: [true, 'el campo intereses es obligatorio'],
         alias: 'interests'
     },
     b: {

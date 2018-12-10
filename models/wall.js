@@ -69,9 +69,9 @@ const postSchema = new Schema({
         required: [true, 'el campo texto es obligatorio'],
         alias: 'text'
     },
-    c: {
+    i: {
         type: [String],
-        required: [true, 'el campo círculos es obligatorio'],
+        required: [true, 'el campo intereses es obligatorio'],
         alias: 'interests'
     },
     l: {

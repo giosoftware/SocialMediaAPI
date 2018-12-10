@@ -1,6 +1,5 @@
 'use strict';
 
-const connectionDB = require('../config/database.js');
 const User = require('../models/user');
 
 const create = (req, res) => {
@@ -12,7 +11,7 @@ const create = (req, res) => {
             ps: req.body.profile.password,
             e: req.body.profile.email
         },
-        c: req.body.interests
+        i: req.body.interests
     };
 
     User.create(user)
@@ -47,6 +46,8 @@ const del = (req, res) => {
 };
 
 const update = (req, res) => {
+    console.log('id: ' + req.params.id);
+
     const user = {
         fn: req.body.firstName,
         ln: req.body.lastName,
@@ -55,7 +56,7 @@ const update = (req, res) => {
             ps: req.body.profile.password,
             e: req.body.profile.email
         },
-        c: req.body.interests,
+        i: req.body.interests,
         b: req.body.blocked
     };
 
@@ -69,18 +70,4 @@ const update = (req, res) => {
         });
 };
 
-const addInterest = (req, res) => {
-    User.updateOne(
-        { _id: req.params.id },
-        { $push: { interests: req.body.interests } }
-    )
-        .then(result => {
-            if (result == null) res.send('No records found');
-            else res.send(result);
-        })
-        .catch(err => {
-            res.status(500).send(err);
-        });
-};
-
-module.exports = { create, read, del, update, addInterest };
+module.exports = { create, read, del, update };

@@ -1,0 +1,40 @@
+'use strict';
+
+const jwt = require('jwt-simple');
+const moment = require('moment');
+const config = require('../config/config');
+
+function createToken(user) {
+    const payload = {
+        sub: user._id,
+        iat: moment().unix(), // (issued at), the time at which the JWT was issued
+        exp: moment().add(14, 'days').unix()
+    }
+
+    return jwt.encode(payload, config.SECRET_TOKEN);
+}
+
+function decodeToken(token) {
+    return new Promise((resolve, reject) => {
+        try {
+            console.log(token + ' \n' + config.SECRET_TOKEN);
+            const payload = jwt.decode(token, config.SECRET_TOKEN)    
+
+            if (payload.exp <= moment().unix()) {
+                reject({
+                    status: 401,
+                    message: "El token ha expirado"
+                }) 
+            }
+
+            resolve(payload.sub);
+        } catch (err) {
+            reject({
+                status: 500,
+                message: "Invalid token"
+            }) 
+        }
+    });
+}
+
+module.exports = { createToken, decodeToken };
