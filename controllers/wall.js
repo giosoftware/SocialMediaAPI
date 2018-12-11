@@ -22,7 +22,7 @@ const create = (req, res) => {
 const read = (req, res) => {
     Wall.findOne({ _id: req.params.id })
         .then(result => {
-            if (result == null) res.send('No records found');
+            if (result == null) res.send('No se han encontrado registros');
             else res.send(result);
         })
         .catch(err => {
@@ -33,7 +33,7 @@ const read = (req, res) => {
 const del = (req, res) => {
     Wall.deleteOne({ _id: req.params.id })
         .then(result => {
-            if (result == null) res.send('No records found');
+            if (result == null) res.send('No se han encontrado registros');
             else res.send(result);
         })
         .catch(err => {
@@ -51,7 +51,7 @@ const update = (req, res) => {
 
     Wall.updateOne({ _id: req.params.id }, wall)
         .then(result => {
-            if (result == null) res.send('No records found');
+            if (result == null) res.send('No se han encontrado registros');
             else res.send(result);
         })
         .catch(err => {

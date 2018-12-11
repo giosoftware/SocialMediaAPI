@@ -22,7 +22,7 @@ const create = (req, res) => {
 const read = (req, res) => {
     Comm.findOne({ _id: req.params.id })
         .then(result => {
-            if (result == null) res.send('No records found');
+            if (result == null) res.send('No se han encontrado registros');
             else res.send(result);
         })
         .catch(err => {
@@ -33,7 +33,7 @@ const read = (req, res) => {
 const del = (req, res) => {
     Comm.deleteOne({ _id: req.params.id })
         .then(result => {
-            if (result == null) res.send('No records found');
+            if (result == null) res.send('No se han encontrado registros');
             else res.send(result);
         })
         .catch(err => {
@@ -54,7 +54,7 @@ const update = (req, res) => {
 
     Comm.updateOne({ _id: req.params.id }, comm)
         .then(result => {
-            if (result == null) res.send('No records found');
+            if (result == null) res.send('No se han encontrado registros');
             else res.send(result);
         })
         .catch(err => {
