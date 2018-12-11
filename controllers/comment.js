@@ -2,7 +2,7 @@
 
 const Comm = require('../models/comment');
 
-const create = (req, res) => {
+function create(req, res) {
     const comm = {
         uid: req.body.userId,
         un: req.body.nickname,
@@ -17,9 +17,9 @@ const create = (req, res) => {
         .catch(err => {
             res.send(err);
         });
-};
+}
 
-const read = (req, res) => {
+function read(req, res) {
     Comm.findOne({ _id: req.params.id })
         .then(result => {
             if (result == null) res.send('No se han encontrado registros');
@@ -28,9 +28,9 @@ const read = (req, res) => {
         .catch(err => {
             res.send(err);
         });
-};
+}
 
-const del = (req, res) => {
+function del(req, res) {
     Comm.deleteOne({ _id: req.params.id })
         .then(result => {
             if (result == null) res.send('No se han encontrado registros');
@@ -39,9 +39,9 @@ const del = (req, res) => {
         .catch(err => {
             res.send(err);
         });
-};
+}
 
-const update = (req, res) => {
+function update(req, res) {
     const comm = {
         uid: req.body.userId,
         un: req.body.nickname,
@@ -60,6 +60,6 @@ const update = (req, res) => {
         .catch(err => {
             res.send(err);
         });
-};
+}
 
 module.exports = { create, read, del, update };

@@ -5,12 +5,20 @@ const service = require('../services/index');
 const bcrypt = require('bcrypt');
 
 // Registro
-const register = (req, res) => {
-    if (!req.body.firstName || !req.body.lastName || !req.body.profile.email ||
-        !req.body.profile.password || !req.body.profile.nickname || !req.body.interests) {
+function register(req, res) {
+    if (
+        !req.body.firstName ||
+        !req.body.lastName ||
+        !req.body.profile.email ||
+        !req.body.profile.password ||
+        !req.body.profile.nickname ||
+        !req.body.interests
+    ) {
         return res
             .status(422)
-            .send({ message: `Error al crear el usuario: debes incluir todos los datos` });
+            .send({
+                message: `Error al crear el usuario: debes incluir todos los datos`
+            });
     }
 
     const user = new User({
@@ -22,7 +30,6 @@ const register = (req, res) => {
             n: req.body.profile.nickname
         },
         i: req.body.interests
-        // b: req.body.blocked,
     });
 
     user.save(err => {
@@ -33,20 +40,24 @@ const register = (req, res) => {
 
         return res.status(201).send({ token: service.createToken(user) });
     });
-};
+}
 
 // Login
-const login = (req, res) => {
+function login(req, res) {
     if (!req.body.email || !req.body.password) {
         return res
             .status(422)
-            .send({ message: `Error al crear identificar el usuario: debes incluir el email y el password` });
+            .send({
+                message: `Error al crear identificar el usuario: debes incluir el email y el password`
+            });
     }
 
     User.findOne({ 'prof.e': req.body.email })
         .then(user => {
             if (!user)
-                return res.status(404).send({ message: 'No se han encontrado registros' });
+                return res
+                    .status(404)
+                    .send({ message: 'No se han encontrado registros' });
 
             //console.log(user.password);
             // If match found, compare with stored password, using the bcrypt.compare function.
@@ -60,15 +71,23 @@ const login = (req, res) => {
                         });
                     } else {
                         res.status(422).send({
-                            message: 'No te has identificado correctamente',
+                            message: 'No te has identificado correctamente'
                         });
                     }
                 })
-                .catch(err => res.status(500).send({ message: `Error al identificarse: ${err.message}` }));
+                .catch(err =>
+                    res
+                        .status(500)
+                        .send({
+                            message: `Error al identificarse: ${err.message}`
+                        })
+                );
         })
         .catch(err => {
-            res.status(500).send({ message: `Error al identificarse: ${err.message}` });
+            res.status(500).send({
+                message: `Error al identificarse: ${err.message}`
+            });
         });
-};
+}
 
 module.exports = { register, login };

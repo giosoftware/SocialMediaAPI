@@ -2,7 +2,7 @@
 
 const User = require('../models/user');
 
-const read = (req, res) => {
+function read(req, res) {
     User.findOne({ _id: req.params.id })
         .then(result => {
             if (result == null) res.send('No se han encontrado registros');
@@ -11,9 +11,9 @@ const read = (req, res) => {
         .catch(err => {
             res.send(err);
         });
-};
+}
 
-const del = (req, res) => {
+function del(req, res) {
     User.deleteOne({ _id: req.params.id })
         .then(result => {
             if (result == null) res.send('No se han encontrado registros');
@@ -22,9 +22,9 @@ const del = (req, res) => {
         .catch(err => {
             res.send(err);
         });
-};
+}
 
-const update = (req, res) => {
+function update(req, res) {
     const user = {
         fn: req.body.firstName,
         ln: req.body.lastName,
@@ -45,9 +45,9 @@ const update = (req, res) => {
         .catch(err => {
             res.send(err);
         });
-};
+}
 
-const addInterest = (req, res) => {
+function addInterest(req, res) {
     const interest = req.body.interest;
     User.updateOne({ _id: req.user }, { $push: { i: interest } })
         .then(result => {
@@ -55,11 +55,13 @@ const addInterest = (req, res) => {
             else res.send(result);
         })
         .catch(err => {
-            res.status(500).send({ message: `Error al añadir el interés: ${err.message}` });
+            res.status(500).send({
+                message: `Error al añadir el interés: ${err.message}`
+            });
         });
 }
 
-const blockUser = (req, res) => {
+function blockUser(req, res) {
     const blockUser = req.body.blockUser;
     User.updateOne({ _id: req.user }, { $push: { b: blockUser } })
         .then(result => {
@@ -67,7 +69,9 @@ const blockUser = (req, res) => {
             else res.send(result);
         })
         .catch(err => {
-            res.status(500).send({ message: `Error al bloquear al usuario interés: ${err.message}` });
+            res.status(500).send({
+                message: `Error al bloquear al usuario interés: ${err.message}`
+            });
         });
 }
 

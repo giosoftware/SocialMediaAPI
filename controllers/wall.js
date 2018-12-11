@@ -2,7 +2,7 @@
 
 const Wall = require('../models/wall');
 
-const create = (req, res) => {
+function create(req, res) {
     const wall = {
         uid: req.body.userId,
         un: req.body.nickname,
@@ -19,7 +19,7 @@ const create = (req, res) => {
         });
 };
 
-const read = (req, res) => {
+function read(req, res) {
     Wall.findOne({ _id: req.params.id })
         .then(result => {
             if (result == null) res.send('No se han encontrado registros');
@@ -30,7 +30,7 @@ const read = (req, res) => {
         });
 };
 
-const del = (req, res) => {
+function del(req, res) {
     Wall.deleteOne({ _id: req.params.id })
         .then(result => {
             if (result == null) res.send('No se han encontrado registros');
@@ -41,7 +41,7 @@ const del = (req, res) => {
         });
 };
 
-const update = (req, res) => {
+function update(req, res) {
     const wall = {
         uid: req.body.userId,
         un: req.body.nickname,
