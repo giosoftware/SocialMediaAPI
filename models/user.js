@@ -1,5 +1,6 @@
 'use strict';
 
+const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
@@ -50,12 +51,29 @@ const userSchema = new Schema({
     }
 });
 
+userSchema.pre('save', function (next) {
+    const user = this;
+
+    bcrypt.genSalt(10)
+        .then((salt) => {
+            bcrypt.hash(user.password, salt)
+                .then((hash) => {
+                    user.password = hash;
+                    next();
+                })
+        })
+        .catch((err) => {
+            return next(err);
+        })
+
+})
+
 userSchema
     .virtual('fullName')
-    .get(function() {
+    .get(function () {
         return this.first_name + ' ' + this.last_name;
     })
-    .set(function(name) {
+    .set(function (name) {
         this.first_name = name.substr(0, name.indexOf(' '));
         this.last_name = name.substr(name.indexOf(' ') + 1);
     });
