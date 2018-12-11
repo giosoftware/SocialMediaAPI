@@ -4,7 +4,7 @@ const Post = require('../models/post');
 
 const create = (req, res) => {
     const post = {
-        uid: req.body.userId,
+        uid: req.user,
         un: req.body.username,
         t: req.body.text,
         i: req.body.interests
@@ -22,7 +22,7 @@ const create = (req, res) => {
 const read = (req, res) => {
     Post.findOne({ _id: req.params.id })
         .then(result => {
-            if (result == null) res.send('No records found');
+            if (result == null) res.send('No se han encontrado registros');
             else res.send(result);
         })
         .catch(err => {
@@ -33,7 +33,7 @@ const read = (req, res) => {
 const del = (req, res) => {
     Post.deleteOne({ _id: req.params.id })
         .then(result => {
-            if (result == null) res.send('No records found');
+            if (result == null) res.send('No se han encontrado registros');
             else res.send(result);
         })
         .catch(err => {
@@ -48,12 +48,12 @@ const update = (req, res) => {
         t: req.body.text,
         i: req.body.interests,
         l: req.body.likes,
-        lun: req.body.likesUsernames
+        lun: req.body.likesNicknames
     };
 
     Post.updateOne({ _id: req.params.id }, post)
         .then(result => {
-            if (result == null) res.send('No records found');
+            if (result == null) res.send('No se han encontrado registros');
             else res.send(result);
         })
         .catch(err => {
@@ -61,4 +61,16 @@ const update = (req, res) => {
         });
 };
 
-module.exports = { create, read, del, update };
+const addLike = (req, res) => {
+    
+    Post.updateOne({ _id: req.body.postId }, {$inc: l})
+        .then(result => {
+            if (result == null) res.send('No se han encontrado registros');
+            else res.send(result);
+        })
+        .catch(err => {
+            res.send(err);
+        });
+};
+
+module.exports = { create, read, del, update, addLike };
