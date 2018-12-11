@@ -29,7 +29,7 @@ const update = (req, res) => {
         fn: req.body.firstName,
         ln: req.body.lastName,
         prof: {
-            u: req.body.profile.username,
+            u: req.body.profile.nickname,
             ps: req.body.profile.password,
             e: req.body.profile.email
         },

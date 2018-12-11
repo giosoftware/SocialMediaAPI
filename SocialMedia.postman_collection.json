@@ -81,7 +81,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n        \"firstName\": \"Sergio\",\n        \"lastName\": \"Martín\",\n        \"profile\": {\n            \"username\": \"miliquito\",\n            \"password\": \"tétrada\",\n            \"email\": \"sermar@gmail.com\"\n        },\n        \"circles\": [\"public\", \"cars\"]\n    }"
+							"raw": "{\n        \"firstName\": \"Sergio\",\n        \"lastName\": \"Martín\",\n        \"profile\": {\n            \"nickname\": \"miliquito\",\n            \"password\": \"tétrada\",\n            \"email\": \"sermar@gmail.com\"\n        },\n        \"circles\": [\"public\", \"cars\"]\n    }"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/user/5c058803b2258105546ad661?",
@@ -334,7 +334,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"userId\": \"5c057704fc0fa8046dda82ad\",\n    \"username\": \"sergio\",\n    \"text\": \"Esto es una prueba de post\",\n    \"circles\": [\"public\"]\n}"
+							"raw": "{\n    \"userId\": \"5c057704fc0fa8046dda82ad\",\n    \"nickname\": \"sergio\",\n    \"text\": \"Esto es una prueba de post\",\n    \"circles\": [\"public\"]\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/posts/",
@@ -399,7 +399,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"userId\": \"5c077e92b7909b02de0fc0c7\",\n    \"username\": \"sergio\",\n    \"text\": \"Esto es una prueba de post\",\n    \"circles\": [\"public\"],\n    \"likes\": 2,\n    \"likesNicknames\": [\"pepito\", \"antonino\"]\n}"
+							"raw": "{\n    \"userId\": \"5c077e92b7909b02de0fc0c7\",\n    \"nickname\": \"sergio\",\n    \"text\": \"Esto es una prueba de post\",\n    \"circles\": [\"public\"],\n    \"likes\": 2,\n    \"likesNicknames\": [\"pepito\", \"antonino\"]\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/posts/5c077e92b7909b02de0fc0c7",
@@ -618,7 +618,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"userId\": \"5c0627036da3190315863875\",\n    \"username\": \"Xavi\",\n    \"month\": \"201811\",\n    \"posts\": [{\n    \t\"_id\": \"5c0627f3b2b49803246c4e55\",\n    \t\"uid\": \"5c0627036da3190315863875\",\n    \t\"un\": \"Antonino\",\n    \t\"d\": \"2018-11-04T09:06:27.275Z\",\n    \t\"t\": \"Es un post de prueba\",\n    \t\"c\": [\"public\"],\n    \t\"co\": [{\n    \t\t\"_id\": \"5bdeb6930e98ba637479d588\",\n    \t\t\"uid\": \"5c0627036da3190315863875\",\n    \t\t\"un\": \"Cristina\",\n    \t\t\"d\": \"2018-11-04T09:06:27.275Z\",\n    \t\t\"t\": \"Esto es un comentario de prueba\",\n    \t\t\"pìd\": \"5c0627f3b2b49803246c4e55\"\n    \t}]\n    \t\n    }]\n}"
+							"raw": "{\n    \"userId\": \"5c0627036da3190315863875\",\n    \"nickname\": \"Xavi\",\n    \"month\": \"201811\",\n    \"posts\": [{\n    \t\"_id\": \"5c0627f3b2b49803246c4e55\",\n    \t\"uid\": \"5c0627036da3190315863875\",\n    \t\"un\": \"Antonino\",\n    \t\"d\": \"2018-11-04T09:06:27.275Z\",\n    \t\"t\": \"Es un post de prueba\",\n    \t\"c\": [\"public\"],\n    \t\"co\": [{\n    \t\t\"_id\": \"5bdeb6930e98ba637479d588\",\n    \t\t\"uid\": \"5c0627036da3190315863875\",\n    \t\t\"un\": \"Cristina\",\n    \t\t\"d\": \"2018-11-04T09:06:27.275Z\",\n    \t\t\"t\": \"Esto es un comentario de prueba\",\n    \t\t\"pìd\": \"5c0627f3b2b49803246c4e55\"\n    \t}]\n    \t\n    }]\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/walls/",

@@ -9,10 +9,10 @@ const postSchema = new Schema({
         required: [true, 'el ID del usuario es obligatorio'],
         alias: 'user_id'
     },
-    un: {
+    n: {
         type: String,
         required: [true, 'el campo nombre de usuario es obligatorio'],
-        alias: 'username'
+        alias: 'nickname'
     },
     d: {
         type: Date,
@@ -34,9 +34,9 @@ const postSchema = new Schema({
         type: Number,
         alias: 'likes'
     },
-    lun: {
+    ln: {
         type: [String],
-        alias: 'likes_usernames'
+        alias: 'likes_nicknames'
     }
 });
 

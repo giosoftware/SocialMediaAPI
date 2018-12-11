@@ -16,7 +16,7 @@ const commentSchema = new Schema({
     un: {
         type: String,
         required: [true, 'el campo nombre de usuario es obligatorio'],
-        alias: 'username'
+        alias: 'nickname'
     },
     d: {
         type: Date,
@@ -38,9 +38,9 @@ const commentSchema = new Schema({
         type: Number,
         alias: 'likes'
     },
-    lun: {
+    ln: {
         type: [String],
-        alias: 'likes_usernames'
+        alias: 'likes_nicknames'
     }
 });
 
@@ -56,7 +56,7 @@ const postSchema = new Schema({
     },
     un: {
         type: String,
-        required: [true, 'el campo username es obligatorio'],
+        required: [true, 'el campo nickname es obligatorio'],
         alias: 'text'
     },
     d: {
@@ -78,9 +78,9 @@ const postSchema = new Schema({
         type: Number,
         alias: 'likes'
     },
-    lun: {
+    ln: {
         type: [String],
-        alias: 'likes_usernames'
+        alias: 'likes_nicknames'
     },
     co: {
         type: [commentSchema],
@@ -97,7 +97,7 @@ const wallSchema = new Schema({
     un: {
         type: String,
         required: [true, 'el campo nombre de usuario es obligatorio'],
-        alias: 'username'
+        alias: 'nickname'
     },
     m: {
         type: String,

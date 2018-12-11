@@ -5,7 +5,7 @@ const Comm = require('../models/comment');
 const create = (req, res) => {
     const comm = {
         uid: req.body.userId,
-        un: req.body.username,
+        un: req.body.nickname,
         t: req.body.text,
         pid: req.body.postId
     };
@@ -44,7 +44,7 @@ const del = (req, res) => {
 const update = (req, res) => {
     const comm = {
         uid: req.body.userId,
-        un: req.body.username,
+        un: req.body.nickname,
         d: req.body.date,
         t: req.body.text,
         i: req.body.interests,
