@@ -2,31 +2,10 @@
 
 const User = require('../models/user');
 
-const create = (req, res) => {
-    const user = {
-        fn: req.body.firstName,
-        ln: req.body.lastName,
-        prof: {
-            u: req.body.profile.username,
-            ps: req.body.profile.password,
-            e: req.body.profile.email
-        },
-        i: req.body.interests
-    };
-
-    User.create(user)
-        .then(result => {
-            res.send(result);
-        })
-        .catch(err => {
-            res.send(err);
-        });
-};
-
 const read = (req, res) => {
     User.findOne({ _id: req.params.id })
         .then(result => {
-            if (result == null) res.send('No records found');
+            if (result == null) res.send('No se han encontrado registros');
             else res.send(result);
         })
         .catch(err => {
@@ -37,7 +16,7 @@ const read = (req, res) => {
 const del = (req, res) => {
     User.deleteOne({ _id: req.params.id })
         .then(result => {
-            if (result == null) res.send('No records found');
+            if (result == null) res.send('No se han encontrado registros');
             else res.send(result);
         })
         .catch(err => {
@@ -46,8 +25,6 @@ const del = (req, res) => {
 };
 
 const update = (req, res) => {
-    console.log('id: ' + req.params.id);
-
     const user = {
         fn: req.body.firstName,
         ln: req.body.lastName,
@@ -62,7 +39,7 @@ const update = (req, res) => {
 
     User.updateOne({ _id: req.params.id }, user)
         .then(result => {
-            if (result == null) res.send('No records found');
+            if (result == null) res.send('No se han encontrado registros');
             else res.send(result);
         })
         .catch(err => {
@@ -70,4 +47,28 @@ const update = (req, res) => {
         });
 };
 
-module.exports = { create, read, del, update };
+const addInterest = (req, res) => {
+    const interest = req.body.interest;
+    User.updateOne({ _id: req.user }, { $push: { i: interest } })
+        .then(result => {
+            if (result == null) res.send('No se han encontrado registros');
+            else res.send(result);
+        })
+        .catch(err => {
+            res.status(500).send({ message: `Error al añadir el interés: ${err.message}` });
+        });
+}
+
+const blockUser = (req, res) => {
+    const blockUser = req.body.blockUser;
+    User.updateOne({ _id: req.user }, { $push: { b: blockUser } })
+        .then(result => {
+            if (result == null) res.send('No se han encontrado registros');
+            else res.send(result);
+        })
+        .catch(err => {
+            res.status(500).send({ message: `Error al bloquear al usuario interés: ${err.message}` });
+        });
+}
+
+module.exports = { read, del, update, addInterest, blockUser };
