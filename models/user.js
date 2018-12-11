@@ -15,18 +15,6 @@ const userSchema = new Schema({
         alias: 'lastname'
     },
     prof: {
-        u: {
-            type: String,
-            lowercase: true,
-            unique: true,
-            required: [true, 'el campo nombre de usuario es obligatorio'],
-            alias: 'username'
-        },
-        ps: {
-            type: String,
-            required: [true, 'el campo contraseña es obligatorio'],
-            alias: 'password'
-        },
         e: {
             type: String,
             lowercase: true,
@@ -37,6 +25,18 @@ const userSchema = new Schema({
                 /\S+@\S+\.\S+/,
                 'Por favor, introduce un correo electrónico válido'
             ]
+        },
+        p: {
+            type: String,
+            required: [true, 'el campo contraseña es obligatorio'],
+            alias: 'password'
+        },
+        n: {
+            type: String,
+            lowercase: true,
+            unique: true,
+            required: [true, 'el campo apodo es obligatorio'],
+            alias: 'nickname'
         },
     },
     i: {
