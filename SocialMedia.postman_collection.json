@@ -1,0 +1,695 @@
+{
+	"info": {
+		"_postman_id": "ff4a7da6-d483-4062-ba9f-0d43c9d8abe7",
+		"name": "SocialMedia",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "Create user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"firstName\": \"Cristina\",\n        \"lastName\": \"Maresma Oliveres\",\n        \"profile\": {\n        \t\"email\": \"cmaresma@gmail.com\",\n            \"password\": \"34552434\",\n            \"nickname\": \"cmaresma\"\n        },\n        \"interests\": \"public\"\n    }"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get user info",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/user/5c058803b2258105546ad661",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"user",
+								"5c058803b2258105546ad661"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modify user",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"firstName\": \"Sergio\",\n        \"lastName\": \"Martín\",\n        \"profile\": {\n            \"username\": \"miliquito\",\n            \"password\": \"tétrada\",\n            \"email\": \"sermar@gmail.com\"\n        },\n        \"circles\": [\"public\", \"cars\"]\n    }"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/user/5c058803b2258105546ad661?",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"user",
+								"5c058803b2258105546ad661"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Xavi",
+									"disabled": true
+								},
+								{
+									"key": "age",
+									"value": "45",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete user",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/user/5c058803b2258105546ad661",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"user",
+								"5c058803b2258105546ad661"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add interests to user",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "text/plain",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"interest\": \"cars\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/user/5c058803b2258105546ad661/addInterest",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"user",
+								"5c058803b2258105546ad661",
+								"addInterest"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register a new user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Cristina\",\n    \"lastName\": \"Maresma Oliveres\",\n    \"profile\": {\n        \"email\": \"cmaresma@gmail.com\",\n        \"password\": \"cmaresma\",\n        \"nickname\": \"cmaresma\"\n    },\n    \"interests\": \"public\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"cmaresma@gmail.com\",\n\t\"password\": \"cmaresma\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Login user",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"email\": \"cmaresma@gmail.com\",\n\t\"password\": \"cmaresma\"\n}"
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "230"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"e6-fQfltObgD8BobgzTxrKKzIjsVKE\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 11 Dec 2018 12:15:14 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Te has identificado correctamente\",\n    \"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1YzBmYTJlNzFhZDUyMTM1OTQ5ZThkZWQiLCJpYXQiOjE1NDQ1MzA1MTQsImV4cCI6MTU0NTc0MDExNH0.VGEUGm6VbRnz6p9RG59L1RaxbIFl3GfHJKFMcjXWIRQ\"\n}"
+						}
+					]
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "82eb5213-38a8-48e3-ae56-ee464ce1cc4c",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "09ed0fd0-d488-4180-9cfc-25d854025690",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "post",
+			"item": [
+				{
+					"name": "http://localhost:3000/posts/",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\": \"5c057704fc0fa8046dda82ad\",\n    \"username\": \"sergio\",\n    \"text\": \"Esto es una prueba de post\",\n    \"circles\": [\"public\"]\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/posts/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"posts",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3000/posts/5c0627f3b2b49803246c4e55",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:3000/posts/5c077e92b7909b02de0fc0c7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"posts",
+								"5c077e92b7909b02de0fc0c7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3000/posts/5c0627f3b2b49803246c4e55",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\": \"5c077e92b7909b02de0fc0c7\",\n    \"username\": \"sergio\",\n    \"text\": \"Esto es una prueba de post\",\n    \"circles\": [\"public\"],\n    \"likes\": 2,\n    \"likesNicknames\": [\"pepito\", \"antonino\"]\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/posts/5c077e92b7909b02de0fc0c7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"posts",
+								"5c077e92b7909b02de0fc0c7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3000/posts/5c062351d97dbc02b83afe90",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:3000/posts/5c077e92b7909b02de0fc0c7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"posts",
+								"5c077e92b7909b02de0fc0c7"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "270548cd-00ee-4984-b8be-adcfef569ea5",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "50b71571-2316-49a3-a0fd-dfc7b7062cb7",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "comm",
+			"item": [
+				{
+					"name": "http://localhost:3000/comms/",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\": \"5c0627036da3190315863875\",\n    \"text\": \"Este es el texto de un comentario\",\n    \"postId\": \"5c0627036da3190315863875\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/comms/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"comms",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3000/comms/5c062ae1f8cb7e03465fba7c",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:3000/comms/5c062ae1f8cb7e03465fba7c",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"comms",
+								"5c062ae1f8cb7e03465fba7c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3000/comms/5c062ae1f8cb7e03465fba7c",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\": \"5c0627036da3190315863875\",\n    \"text\": \"Este es el texto de un comentario2\",\n    \"postId\": \"5c0627036da3190315863875\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/comms/5c062ae1f8cb7e03465fba7c",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"comms",
+								"5c062ae1f8cb7e03465fba7c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3000/comms/5c062ae1f8cb7e03465fba7c",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:3000/comms/5c062ae1f8cb7e03465fba7c",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"comms",
+								"5c062ae1f8cb7e03465fba7c"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "d9e0811e-bdce-45bb-907d-5ef0c7bb8f1a",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "0c870f6a-1f9b-4d99-b403-e10052c94356",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "wall",
+			"item": [
+				{
+					"name": "http://localhost:3000/walls/",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\": \"5c0627036da3190315863875\",\n    \"username\": \"Xavi\",\n    \"month\": \"201811\",\n    \"posts\": [{\n    \t\"_id\": \"5c0627f3b2b49803246c4e55\",\n    \t\"uid\": \"5c0627036da3190315863875\",\n    \t\"un\": \"Antonino\",\n    \t\"d\": \"2018-11-04T09:06:27.275Z\",\n    \t\"t\": \"Es un post de prueba\",\n    \t\"c\": [\"public\"],\n    \t\"co\": [{\n    \t\t\"_id\": \"5bdeb6930e98ba637479d588\",\n    \t\t\"uid\": \"5c0627036da3190315863875\",\n    \t\t\"un\": \"Cristina\",\n    \t\t\"d\": \"2018-11-04T09:06:27.275Z\",\n    \t\t\"t\": \"Esto es un comentario de prueba\",\n    \t\t\"pìd\": \"5c0627f3b2b49803246c4e55\"\n    \t}]\n    \t\n    }]\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/walls/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"walls",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "a4d29975-72d1-4c9d-becb-81e563936276",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "1c46baea-2dd7-4dc9-87a9-6cc12f64a76d",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1YzBmYTJlNzFhZDUyMTM1OTQ5ZThkZWQiLCJpYXQiOjE1NDQ1Mjg2MTUsImV4cCI6MTU0NTczODIxNX0.-292_8JxuTnilCG6b8ALps9whc3y1UQZWPZYOQ3VxBE",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "de5e8e03-5d96-487a-b866-8b96a59669cf",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "91a5a398-8ba9-4638-881a-648f8b1f102f",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
