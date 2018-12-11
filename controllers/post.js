@@ -63,7 +63,7 @@ const update = (req, res) => {
 
 const addLike = (req, res) => {
     
-    Post.updateOne({ _id: req.body.postId }, {$inc: l})
+    Post.updateOne({ _id: req.body.postId }, {$inc: {l: 1}})
         .then(result => {
             if (result == null) res.send('No se han encontrado registros');
             else res.send(result);
