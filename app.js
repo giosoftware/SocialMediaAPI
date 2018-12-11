@@ -1,13 +1,10 @@
 'use strict';
 
 const express = require('express');
+const bodyParser = require('body-parser');
 
 const config = require('./config/config');
-const user = require('./routes/user');
-const post = require('./routes/post');
-const comm = require('./routes/comment')
-const wall = require('./routes/wall')
-let bodyParser = require('body-parser');
+const globalRoutes = require('./routes/global');
 
 const app = express();
 const mongoose = require('mongoose');
@@ -21,10 +18,7 @@ mongoose.connect(config.db, { useNewUrlParser: true }, (err, res) => {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use('/users', user);
-app.use('/posts', post);
-app.use('/comms', comm);
-app.use('/walls', wall);
+app.use('/api/', globalRoutes);
 
 app.listen(config.port, () => {
     console.log(`API REST corriendo en http://localhost:${config.port}`);
