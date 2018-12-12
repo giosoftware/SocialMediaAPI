@@ -5,32 +5,27 @@ while (users.hasNext()) {
     wall.uid = user._id;
     wall.n = user.prof.n;
     wall.i = user.i;
-    wall.m = "" + new Date().getUTCFullYear() + new Date().getUTCMonth();
+    wall.m = '' + new Date().getUTCFullYear() + new Date().getUTCMonth();
     wall.p = [];
 
     var posts = db.posts.aggregate([
         {
-            $match:
-            {
-                $or:
-                    [
-                        { uid: user._id },
-                        {
-                            $and:
-                                [
-                                    { i: user.i },
-                                    { uid: { $nin: user.b } }
-                                ]
-                        }
-                    ]
+            $match: {
+                $or: [
+                    { uid: user._id },
+                    {
+                        $and: [{ i: user.i }, { uid: { $nin: user.b } }]
+                    }
+                ]
             }
-
         },
         { $sort: { d: -1 } }
     ]);
 
     while (posts.hasNext()) {
         post = posts.next();
+        comms = db.comments.find({pid: post._id})
+        post.comm = comms.toArray();
         wall.p.push(post);
         //printjson(post);
     }
