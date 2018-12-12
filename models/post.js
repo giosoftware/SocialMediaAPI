@@ -11,7 +11,7 @@ const postSchema = new Schema({
     },
     n: {
         type: String,
-        required: [true, 'el campo nombre de usuario es obligatorio'],
+        required: [true, 'el campo apodo es obligatorio'],
         alias: 'nickname'
     },
     d: {

@@ -15,7 +15,7 @@ const commentSchema = new Schema({
     },
     un: {
         type: String,
-        required: [true, 'el campo nombre de usuario es obligatorio'],
+        required: [true, 'el campo apodo es obligatorio'],
         alias: 'nickname'
     },
     d: {
@@ -96,7 +96,7 @@ const wallSchema = new Schema({
     },
     un: {
         type: String,
-        required: [true, 'el campo nombre de usuario es obligatorio'],
+        required: [true, 'el campo apodo es obligatorio'],
         alias: 'nickname'
     },
     m: {
