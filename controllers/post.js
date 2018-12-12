@@ -49,7 +49,7 @@ function update(req, res) {
         t: req.body.text,
         i: req.body.interests,
         l: req.body.likes,
-        lun: req.body.likesNicknames
+        ln: req.body.likesNicknames
     };
 
     Post.updateOne({ _id: req.params.id }, post)

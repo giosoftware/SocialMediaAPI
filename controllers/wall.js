@@ -5,7 +5,7 @@ const Wall = require('../models/wall');
 function create(req, res) {
     const wall = {
         uid: req.body.userId,
-        un: req.body.nickname,
+        n: req.body.nickname,
         m: req.body.month,
         p: req.body.posts
     };
@@ -44,7 +44,7 @@ function del(req, res) {
 function update(req, res) {
     const wall = {
         uid: req.body.userId,
-        un: req.body.nickname,
+        n: req.body.nickname,
         m: req.body.month,
         p: req.body.posts
     };

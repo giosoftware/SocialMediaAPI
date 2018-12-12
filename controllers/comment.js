@@ -5,7 +5,7 @@ const User = require('../models/user');
 
 function create(req, res) {
     const comm = {
-        uid: req.body.userId,
+        uid: req.user,
         n: req.body.nickname,
         t: req.body.text,
         pid: req.body.postId
@@ -44,13 +44,13 @@ function del(req, res) {
 
 function update(req, res) {
     const comm = {
-        uid: req.body.userId,
-        un: req.body.nickname,
+        uid: req.user,
+        n: req.body.nickname,
         d: req.body.date,
         t: req.body.text,
         i: req.body.interests,
         l: req.body.likes,
-        lun: req.body.likesUsernames
+        ln: req.body.likesNicknames
     };
 
     Comm.updateOne({ _id: req.params.id }, comm)

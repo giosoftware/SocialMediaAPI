@@ -13,7 +13,7 @@ const commentSchema = new Schema({
         required: [true, 'el ID del usuario es obligatorio'],
         alias: 'user_id'
     },
-    un: {
+    n: {
         type: String,
         required: [true, 'el campo apodo es obligatorio'],
         alias: 'nickname'
@@ -54,7 +54,7 @@ const postSchema = new Schema({
         required: [true, 'el ID del usuario es obligatorio'],
         alias: 'user_id'
     },
-    un: {
+    n: {
         type: String,
         required: [true, 'el campo nickname es obligatorio'],
         alias: 'text'
@@ -94,7 +94,7 @@ const wallSchema = new Schema({
         required: [true, 'el ID del usuario es obligatorio'],
         alias: 'user_id'
     },
-    un: {
+    n: {
         type: String,
         required: [true, 'el campo apodo es obligatorio'],
         alias: 'nickname'
