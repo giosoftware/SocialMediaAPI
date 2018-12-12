@@ -1,11 +1,12 @@
 'use strict';
 
 const Comm = require('../models/comment');
+const User = require('../models/user');
 
 function create(req, res) {
     const comm = {
         uid: req.body.userId,
-        un: req.body.nickname,
+        n: req.body.nickname,
         t: req.body.text,
         pid: req.body.postId
     };
@@ -62,4 +63,19 @@ function update(req, res) {
         });
 }
 
-module.exports = { create, read, del, update };
+async function addLike(req, res) {
+    try {
+        const user = await User.findOne({ _id: req.user });
+        if (!user) throw new Error('No se ha encontrado el usuario que ha realizado la acción');
+        const comm = await Comm.updateOne(
+            { _id: req.body.commId },
+            { $inc: { l: 1 }, $push: { ln: user.prof.n } }
+        );
+        if (!comm) throw new Error('No se ha encontrado el comentario');
+        else res.send(comm);
+    } catch (err) {
+        res.status(500).send({'message': `Ha habido un error al añadir el 'Me gusta': ${err.message}`});
+    }
+}
+
+module.exports = { create, read, del, update, addLike };
