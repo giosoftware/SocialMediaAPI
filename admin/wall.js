@@ -5,43 +5,48 @@ const User = require('../models/user');
 const Post = require('../models/post');
 const Comm = require('../models/comment');
 
+// Open db connection
+const config = require('../config/config');
+const mongoose = require('mongoose');
+mongoose.set('useCreateIndex', true); // To avoid DeprecationWarning
+mongoose.connect(config.db, { useNewUrlParser: true }, (err, res) => {
+    if (err) {
+        return console.log(`Error al conectar la bd: ${err}`);
+    }
+    console.log('Conexion establecida');
+});
+
 async function createCurrentMonthWall(userId) {
     const currentMonth = getCurrentMonth();
-    const criteria = {};
+    let criteria = {};
 
     if (userId) criteria = { _id: userId }
 
     try {
-        console.log('currentmonth: ' + currentMonth);
-        console.log('voy a llamar a find con criteria: ' + criteria);
-        const users = await User.find({});
-        console.log(`Se han encontrado: ${users.length} usuarios`);
+        let users = await User.find(criteria);
         users.forEach(user => {
             console.log(user.nickname);
+            addWallDocument(user, currentMonth);
         });
     } catch (err) {
         console.error(`Se ha producido un error al generar el muro para este mes: ${err.message}`);
     }
-
-
 }
 
-function addWallDocument(userId, nickname, month, posts) {
+function addWallDocument(user, currentMonth) {
     const wall = {
-        uid: req.body.userId,
-        n: req.body.nickname,
-        m: currentMonth,
-        p: req.body.posts
+        uid: user._id,
+        n: user.nickname,
+        m: currentMonth
     };
 
     Wall.create(wall)
         .then(result => {
-            res.send(result);
+            console.log(result);
         })
         .catch(err => {
-            console.err(err.message);
+            console.error(err.message);
         });
-
 }
 
 function getCurrentMonth() {
@@ -52,4 +57,5 @@ function getCurrentMonth() {
     return "" + year + month;
 }
 
+//createCurrentMonthWall("5c10d68c453fdb2d44a779f3");
 createCurrentMonthWall();
