@@ -6,7 +6,7 @@ const User = require('../models/user');
 function create(req, res) {
     const post = {
         uid: req.user,
-        un: req.body.nickname,
+        n: req.body.nickname,
         t: req.body.text,
         i: req.body.interests
     };
@@ -45,7 +45,7 @@ function del(req, res) {
 function update(req, res) {
     const post = {
         uid: req.body.userId,
-        un: req.body.nickname,
+        n: req.body.nickname,
         t: req.body.text,
         i: req.body.interests,
         l: req.body.likes,
