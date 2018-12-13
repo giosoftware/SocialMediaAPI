@@ -16,8 +16,7 @@ mongoose.connect(config.db, { useNewUrlParser: true }, (err, res) => {
     console.log('Conexion establecida');
 });
 
-async function createCurrentMonthWall(userId) {
-    const currentMonth = getCurrentMonth();
+async function generateCurrentMonthWall(userId) {
     let criteria = {};
 
     if (userId) criteria = { _id: userId }
@@ -25,22 +24,51 @@ async function createCurrentMonthWall(userId) {
     try {
         let users = await User.find(criteria);
         users.forEach(user => {
-            console.log(user.nickname);
-            addWallDocument(user, currentMonth);
+            //console.log(user.nickname);
+            let wall = generateWallDoc(user);
+            addWallDocument(wall);
         });
     } catch (err) {
         console.error(`Se ha producido un error al generar el muro para este mes: ${err.message}`);
     }
 }
 
-function addWallDocument(user, currentMonth) {
-    const wall = {
-        uid: user._id,
-        n: user.nickname,
-        m: currentMonth
-    };
+function generateWallDoc(user) {
+    let wall = {}
+    const currentMonth = getCurrentMonth();
+    wall.uid = user._id;
+    wall.n = user.prof.n;
+    wall.i = user.i; // Hidde after tests
+    wall.m = currentMonth;
+    wall.p = [];
 
-    Wall.create(wall)
+    var posts = db.posts.aggregate([
+        { $project: {__v: 0} },
+        {
+            $match: {
+                $or: [
+                    { uid: user._id },
+                    {
+                        $and: [{ i: { $in: user.i } }, { uid: { $nin: user.b } }]
+                    }
+                ]
+            }
+        },
+        { $sort: { d: -1 } }
+    ]);
+
+    while (posts.hasNext()) {
+        post = posts.next();
+        comms = db.comments.find({pid: post._id, uid: { $nin: user.b }}, {__v:0}).limit(3).sort({d: -1})
+        post.comm = comms.toArray();
+        wall.p.push(post);
+    }
+
+    return wall;
+}
+
+function addWallDocument(doc) {
+    Wall.create(doc)
         .then(result => {
             console.log(result);
         })
@@ -58,4 +86,4 @@ function getCurrentMonth() {
 }
 
 //createCurrentMonthWall("5c10d68c453fdb2d44a779f3");
-createCurrentMonthWall();
+generateCurrentMonthWall();
