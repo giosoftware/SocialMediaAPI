@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"socialmedia.walls"},{"v":2,"key":{"uid":1.0},"name":"userId","ns":"socialmedia.walls"}],"uuid":"9f294de6f1f9474eb195a8213e78f915"}
