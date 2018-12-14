@@ -19,7 +19,6 @@ const userSchema = new Schema({
         e: {
             type: String,
             lowercase: true,
-            unique: true,
             required: [true, 'el campo correo electrónico es obligatorio'],
             alias: 'email',
             match: [
@@ -35,7 +34,6 @@ const userSchema = new Schema({
         n: {
             type: String,
             lowercase: true,
-            unique: true,
             required: [true, 'el campo apodo es obligatorio'],
             alias: 'nickname'
         },
