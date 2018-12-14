@@ -47,7 +47,7 @@ const userSchema = new Schema({
         type: [Schema.Types.ObjectId],
         alias: 'blocked'
     }
-});
+}, { versionKey: false });
 
 userSchema.pre('save', function (next) {
     const user = this;

@@ -38,7 +38,7 @@ const postSchema = new Schema({
         type: [String],
         alias: 'likes_nicknames'
     }
-});
+}, { versionKey: false });
 
 const Post = mongoose.model('post', postSchema);
 

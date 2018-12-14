@@ -38,7 +38,7 @@ const commentSchema = new Schema({
         type: [String],
         alias: 'likes_nicknames'
     }
-});
+}, { versionKey: false });
 
 const Comment = mongoose.model('comment', commentSchema);
 

@@ -42,7 +42,7 @@ const commentSchema = new Schema({
         type: [String],
         alias: 'likes_nicknames'
     }
-});
+}, { versionKey: false });
 
 const postSchema = new Schema({
     _id: {
@@ -86,7 +86,7 @@ const postSchema = new Schema({
         type: [commentSchema],
         alias: 'comments'
     }
-});
+}, { versionKey: false });
 
 const wallSchema = new Schema({
     uid: {
@@ -108,7 +108,7 @@ const wallSchema = new Schema({
         type: [postSchema],
         alias: 'posts'
     }
-});
+}, { versionKey: false });
 
 const Wall = mongoose.model('wall', wallSchema);
 
