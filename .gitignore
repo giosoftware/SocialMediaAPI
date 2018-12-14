@@ -1,8 +1,10 @@
 node_modules
-AlfredoPoblador_SocialMedia.zip
-Christian_RedSocial.zip
 dbbackup/walls.json
 dbbackup/comments.json
 dbbackup/howto.txt
 dbbackup/posts.json
 dbbackup/users.json
+dbbackup/dump/socialmedia/walls.bson
+dbbackup/dump/socialmedia/comments.bson
+dbbackup/dump/socialmedia/posts.bson
+dbbackup/dump/socialmedia/users.bson
