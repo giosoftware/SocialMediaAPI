@@ -8,3 +8,4 @@ dbbackup/dump/socialmedia/walls.bson
 dbbackup/dump/socialmedia/comments.bson
 dbbackup/dump/socialmedia/posts.bson
 dbbackup/dump/socialmedia/users.bson
+dbbackup/dump-restore.txt
