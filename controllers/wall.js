@@ -1,7 +1,7 @@
 'use strict';
 
 const Wall = require('../models/wall');
-
+/*
 function create(req, res) {
     const wall = {
         uid: req.body.userId,
@@ -18,7 +18,7 @@ function create(req, res) {
             res.send(err);
         });
 };
-
+*/
 function read(req, res) {
     Wall.findOne({ _id: req.params.id })
         .then(result => {
@@ -29,7 +29,7 @@ function read(req, res) {
             res.send(err);
         });
 };
-
+/*
 function del(req, res) {
     Wall.deleteOne({ _id: req.params.id })
         .then(result => {
@@ -58,5 +58,5 @@ function update(req, res) {
             res.send(err);
         });
 };
-
-module.exports = { create, read, del, update };
+*/
+module.exports = { read };

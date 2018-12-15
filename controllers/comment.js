@@ -3,6 +3,12 @@
 const Comm = require('../models/comment');
 const User = require('../models/user');
 
+/**
+ * Cuando un usuario añade un comentario hay que crearlo en su colección, además 
+ * de incorporarlo a la publicación a la que hace referencia en todos los muros
+ * donde se encuentre. Después después de añadirlo a la publicación, si el número
+ * de comentarios excede de 3, hay que quitar el más antiguo de los 4.
+ */
 function create(req, res) {
     const comm = {
         uid: req.user,
@@ -31,6 +37,12 @@ function read(req, res) {
         });
 }
 
+/**
+ * Cuando un usuario elimina un comentario hay que borrarlo de su colección. 
+ * También hay que borrarlo de la publicación a la que hace referencia en todos 
+ * los muros donde se encuentre. Si era uno de los útimos 3 comentarios, hay que
+ * recuperar el siguiente más actual de la colección de comentarios.
+ */
 function del(req, res) {
     Comm.deleteOne({ _id: req.params.id })
         .then(result => {

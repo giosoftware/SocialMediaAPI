@@ -82,7 +82,7 @@ const postSchema = new Schema({
         type: [String],
         alias: 'likes_nicknames'
     },
-    co: {
+    c: {
         type: [commentSchema],
         alias: 'comments'
     }
@@ -105,7 +105,8 @@ const wallSchema = new Schema({
         alias: 'month'
     },
     p: {
-        type: [postSchema],
+        //type: [postSchema],
+        type: [],
         alias: 'posts'
     }
 }, { versionKey: false });

@@ -1,24 +1,24 @@
 'use strict';
 
-const User = require('../models/user');
-const service = require('../services/index');
 const bcrypt = require('bcrypt');
 
-// Registro
-function register(req, res) {
+const User = require('../models/user');
+const service = require('../services/index');
+const wall = require('../admin/wall');
+
+/**
+ * Cuando un nuevo usuario se registra en la red social, hay que añadir el usuario
+ * a la colección users. Además hay que generarle un muro para el mes en curso
+ */
+async function register(req, res) {
     if (
-        !req.body.firstName ||
-        !req.body.lastName ||
-        !req.body.profile.email ||
-        !req.body.profile.password ||
-        !req.body.profile.nickname ||
-        !req.body.interests
+        !req.body.firstName || !req.body.lastName ||
+        !req.body.profile.email || !req.body.profile.password ||
+        !req.body.profile.nickname || !req.body.interests
     ) {
-        return res
-            .status(422)
-            .send({
-                message: `Error al crear el usuario: debes incluir todos los datos`
-            });
+        return res.status(422).send({
+            message: `Error al crear el usuario: debes incluir todos los datos`
+        });
     }
 
     const user = new User({
@@ -32,14 +32,18 @@ function register(req, res) {
         i: req.body.interests
     });
 
-    user.save(err => {
-        if (err)
-            return res
-                .status(500)
-                .send({ message: `Error al crear el usuario: ${err.message}` });
-
+    try {
+        // añadir el usuario a la colección users
+        console.log('1.gravo el usuario')
+        await user.save();
+        // Generar el muro para el mes en curso
+        console.log('2. genero el muro')
+        await wall.generateCurrentMonthWall(user);
+        console.log('10. listo')
         return res.status(201).send({ token: service.createToken(user) });
-    });
+    } catch (err) {
+        res.status(500).send({ message: `Error al registrar el nuevo usuario: ${err.message}` });
+    }
 }
 
 // Login

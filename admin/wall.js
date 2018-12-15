@@ -5,85 +5,119 @@ const User = require('../models/user');
 const Post = require('../models/post');
 const Comm = require('../models/comment');
 
-// Open db connection
-const config = require('../config/config');
-const mongoose = require('mongoose');
-mongoose.set('useCreateIndex', true); // To avoid DeprecationWarning
-mongoose.connect(config.db, { useNewUrlParser: true }, (err, res) => {
-    if (err) {
-        return console.log(`Error al conectar la bd: ${err}`);
-    }
-    console.log('Conexion establecida');
-});
-
-async function generateCurrentMonthWall(userId) {
-    let criteria = {};
-
-    if (userId) criteria = { _id: userId }
-
+async function generateCurrentMonthWall(user) {
+    console.log('3. generateCurrentMonthWall');
     try {
-        let users = await User.find(criteria);
-        users.forEach(user => {
-            //console.log(user.nickname);
-            let wall = generateWallDoc(user);
-            addWallDocument(wall);
-        });
+        if (user) {
+            let wall = getBasicWallDoc(user);
+            wall = await insertPostsAndComments(user, wall);
+            await Wall.create(wall);
+        } else {
+            let users = await User.find();
+            for (let user of users) {
+                let wall = getBasicWallDoc(user);
+                await Wall.create(wall);
+            }
+        }
     } catch (err) {
-        console.error(`Se ha producido un error al generar el muro para este mes: ${err.message}`);
+        throw err;
     }
 }
 
-function generateWallDoc(user) {
-    let wall = {}
+function getBasicWallDoc(user) {
+    let wall = {};
     const currentMonth = getCurrentMonth();
     wall.uid = user._id;
     wall.n = user.prof.n;
-    wall.i = user.i; // Hidde after tests
+    wall.i = user.i; // Quitar después de las pruebas
     wall.m = currentMonth;
     wall.p = [];
-
-    var posts = db.posts.aggregate([
-        { $project: {__v: 0} },
-        {
-            $match: {
-                $or: [
-                    { uid: user._id },
-                    {
-                        $and: [{ i: { $in: user.i } }, { uid: { $nin: user.b } }]
-                    }
-                ]
-            }
-        },
-        { $sort: { d: -1 } }
-    ]);
-
-    while (posts.hasNext()) {
-        post = posts.next();
-        comms = db.comments.find({pid: post._id, uid: { $nin: user.b }}, {__v:0}).limit(3).sort({d: -1})
-        post.comm = comms.toArray();
-        wall.p.push(post);
-    }
 
     return wall;
 }
 
-function addWallDocument(doc) {
-    Wall.create(doc)
-        .then(result => {
-            console.log(result);
-        })
-        .catch(err => {
-            console.error(err.message);
-        });
+async function insertPostsAndComments(user, wall) {
+    try {
+        let posts = await Post.aggregate([
+            {
+                $match: {
+                    $or: [
+                        { uid: user._id },
+                        {
+                            $and: [
+                                { i: { $in: user.i } },
+                                { uid: { $nin: user.b } }
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                $lookup: {
+                    from: 'comments',
+                    as: 'c',
+                    let: { postId: '$_id' },
+                    pipeline: [
+                        {
+                            $match: {
+                                $expr: { $eq: ['$pid', '$$postId'] }
+                            }
+                        },
+                        { $sort: { d: -1 } },
+                        { $limit: 3 }
+                    ]
+                }
+            },
+            {
+                $sort: { d: -1 }
+            }
+        ]);
+
+        wall.p = posts;
+
+        return wall;
+    } catch (err) {
+        throw err;
+    }
 }
 
 function getCurrentMonth() {
-    const dateObj = new Date();
-    const month = dateObj.getUTCMonth() + 1; //months from 1-12
-    const year = dateObj.getUTCFullYear();
-
-    return "" + year + month;
+    var d = new Date();
+    return '' + d.getUTCFullYear() + (d.getUTCMonth() + 1);
 }
 
-//createCurrentMonthWall("5c10d68c453fdb2d44a779f3");
-generateCurrentMonthWall();
+module.exports = { generateCurrentMonthWall };
+
+/*
+// SÓLO PARA PRUEBAS
+// Open db connection
+const config = require('../config/config');
+const mongoose = require('mongoose');
+mongoose.set('useCreateIndex', true); // To avoid DeprecationWarning
+mongoose.connect(
+    config.db,
+    { useNewUrlParser: true },
+    (err, res) => {
+        if (err) {
+            return console.log(`Error al conectar la bd: ${err}`);
+        }
+        console.log('Conexion establecida');
+    }
+);
+
+async function init() {
+    try {
+        let user;
+        // user = await User.findOne({fn: 'Cristina'})
+        console.log('EMPEZAMOS');
+        await generateCurrentMonthWall(user);
+        console.log('TERMINAMOS');
+    } catch (err) {
+        console.error('Init error: ' + err.message);
+    } finally {
+        mongoose.connection.close();
+    }
+}
+
+init();
+*/

@@ -3,6 +3,11 @@
 const Post = require('../models/post');
 const User = require('../models/user');
 
+/**
+ * Cuando un usuario añade un post hay que crearlo en su colección. También hay
+ * que añadirla en su muro y en todos los muros de los usuarios interesados, 
+ * exceptuando aquellos que han bloquedo al usuario.
+ */
 function create(req, res) {
     const post = {
         uid: req.user,
@@ -31,6 +36,11 @@ function read(req, res) {
         });
 }
 
+/**
+ * Cuando un usuario borra una publicación hay que elimnarla de su colección, 
+ * además de borrar los comentarios relacionados. Después hay que elininar esa
+ * publicación de todos los muros.
+ */
 function del(req, res) {
     Post.deleteOne({ _id: req.params.id })
         .then(result => {
