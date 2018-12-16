@@ -6,7 +6,6 @@ const Post = require('../models/post');
 const Comm = require('../models/comment');
 
 async function generateCurrentMonthWall(user) {
-    console.log('3. generateCurrentMonthWall');
     try {
         if (user) {
             let wall = getBasicWallDoc(user);
@@ -16,6 +15,7 @@ async function generateCurrentMonthWall(user) {
             let users = await User.find();
             for (let user of users) {
                 let wall = getBasicWallDoc(user);
+                // wall = await insertPostsAndComments(user, wall); // Nada que añadir el día 1 a las 00:00
                 await Wall.create(wall);
             }
         }
@@ -29,7 +29,7 @@ function getBasicWallDoc(user) {
     const currentMonth = getCurrentMonth();
     wall.uid = user._id;
     wall.n = user.prof.n;
-    wall.i = user.i; // Quitar después de las pruebas
+    // wall.i = user.i; // Quitar después de las pruebas
     wall.m = currentMonth;
     wall.p = [];
 
