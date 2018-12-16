@@ -9,7 +9,7 @@ const User = require('../models/user');
  * de incorporarlo a la publicación a la que hace referencia en todos los muros
  * donde se encuentre. En el muro deben haber como máximo los 3 últimos commentarios.
  */
-async function create(req, res) {
+async function createComment(req, res) {
     try {
         let comm = {
             uid: req.user,
@@ -35,7 +35,7 @@ async function create(req, res) {
     }
 }
 
-function read(req, res) {
+function readComment(req, res) {
     Comm.findOne({ _id: req.params.id })
         .then(result => {
             if (result == null) res.send('No se han encontrado registros');
@@ -53,7 +53,7 @@ function read(req, res) {
  * los muros donde se encuentre. Si era uno de los útimos 3 comentarios, hay que
  * recuperar el siguiente más actual de la colección de comentarios.
  */
-async function del(req, res) {
+async function deleteComment(req, res) {
     try {
         const commId = req.params.id;
         // Comprobamos que existe la publicación y que el usuario es el autor
@@ -92,7 +92,7 @@ async function del(req, res) {
     }
 }
 
-function update(req, res) {
+function updateComment(req, res) {
     const comm = {
         uid: req.user,
         n: req.body.nickname,
@@ -135,4 +135,4 @@ async function addLike(req, res) {
     }
 }
 
-module.exports = { create, read, del, update, addLike };
+module.exports = { createComment, readComment, deleteComment, updateComment, addLike };

@@ -6,9 +6,9 @@ const router = express.Router();
 const comm = require('../controllers/comment');
 
 router.put('/addLike', comm.addLike);
-router.post('/', comm.create);
-router.get('/:id', comm.read);
-router.put('/:id', comm.update);
-router.delete('/:id', comm.del);
+router.post('/', comm.createComment);
+router.get('/:id', comm.readComment);
+router.put('/:id', comm.updateComment);
+router.delete('/:id', comm.deleteComment);
 
 module.exports = router;
