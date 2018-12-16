@@ -2,7 +2,7 @@
 
 const Wall = require('../models/wall');
 
-function read(req, res) {
+function getWall(req, res) {
     Wall.findOne({ _id: req.params.id })
         .then(result => {
             if (result == null) res.send('No se han encontrado registros');
@@ -13,4 +13,4 @@ function read(req, res) {
         });
 }
 
-module.exports = { read };
+module.exports = { getWall };

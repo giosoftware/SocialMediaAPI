@@ -12,7 +12,7 @@ const Comm = require('../models/comment');
  * que añadirla en su muro y en todos los muros de los usuarios interesados,
  * exceptuando aquellos que han bloquedo al usuario.
  */
-async function create(req, res) {
+async function createPost(req, res) {
     try {
         let post = {
             uid: req.user,
@@ -60,7 +60,7 @@ async function addPostToWalls(post, user) {
     }
 }
 
-function read(req, res) {
+function getPost(req, res) {
     Post.findOne({ _id: req.params.id })
         .then(result => {
             if (result == null) res.send('No se han encontrado registros');
@@ -151,4 +151,4 @@ async function addLike(req, res) {
     }
 }
 
-module.exports = { create, read, del, update, addLike };
+module.exports = { createPost, getPost, del, update, addLike };

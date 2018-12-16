@@ -2,7 +2,7 @@
 
 const User = require('../models/user');
 
-function read(req, res) {
+function getUser(req, res) {
     User.findOne({ _id: req.params.id })
         .then(result => {
             if (result == null) res.send('No se han encontrado registros');
@@ -13,7 +13,7 @@ function read(req, res) {
         });
 }
 
-function del(req, res) {
+function deleteUser(req, res) {
     User.deleteOne({ _id: req.params.id })
         .then(result => {
             res.json(result);
@@ -23,7 +23,7 @@ function del(req, res) {
         });
 }
 
-function update(req, res) {
+function updateUser(req, res) {
     const user = {
         fn: req.body.firstName,
         ln: req.body.lastName,
@@ -74,4 +74,4 @@ function blockUser(req, res) {
         });
 }
 
-module.exports = { read, del, update, addInterest, blockUser };
+module.exports = { getUser, deleteUser, updateUser, addInterest, blockUser };

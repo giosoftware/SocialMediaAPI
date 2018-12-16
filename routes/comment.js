@@ -7,7 +7,7 @@ const comm = require('../controllers/comment');
 
 router.put('/addLike', comm.addLike);
 router.post('/', comm.createComment);
-router.get('/:id', comm.readComment);
+router.get('/:id', comm.getComment);
 router.put('/:id', comm.updateComment);
 router.delete('/:id', comm.deleteComment);
 

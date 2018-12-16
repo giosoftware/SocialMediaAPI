@@ -35,7 +35,7 @@ async function createComment(req, res) {
     }
 }
 
-function readComment(req, res) {
+function getComment(req, res) {
     Comm.findOne({ _id: req.params.id })
         .then(result => {
             if (result == null) res.send('No se han encontrado registros');
@@ -135,4 +135,4 @@ async function addLike(req, res) {
     }
 }
 
-module.exports = { createComment, readComment, deleteComment, updateComment, addLike };
+module.exports = { createComment, getComment, deleteComment, updateComment, addLike };
