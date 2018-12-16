@@ -11,7 +11,6 @@ const globalRoutes = require('./routes/global');
 const app = express();
 const mongoose = require('mongoose');
 
-
 mongoose.connect(config.db, { useNewUrlParser: true })
 .then(res => console.log('Conexión a mongodb establecida'))
 .catch(err => {

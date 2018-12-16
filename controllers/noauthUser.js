@@ -12,12 +12,15 @@ const wall = require('../admin/wall');
  */
 async function register(req, res) {
     if (
-        !req.body.firstName || !req.body.lastName ||
-        !req.body.profile.email || !req.body.profile.password ||
-        !req.body.profile.nickname || !req.body.interests
+        !req.body.firstName ||
+        !req.body.lastName ||
+        !req.body.profile.email ||
+        !req.body.profile.password ||
+        !req.body.profile.nickname ||
+        !req.body.interests
     ) {
-        return res.status(422).send({
-            message: `Error al crear el usuario: debes incluir todos los datos`
+        return res.status(422).json({
+            message: 'Error al crear el usuario: debes incluir todos los datos'
         });
     }
 
@@ -34,26 +37,27 @@ async function register(req, res) {
 
     try {
         // añadir el usuario a la colección users
-        console.log('1.gravo el usuario')
+        console.log('1.gravo el usuario');
         await user.save();
         // Generar el muro para el mes en curso
-        console.log('2. genero el muro')
+        console.log('2. genero el muro');
         await wall.generateCurrentMonthWall(user);
-        console.log('10. listo')
-        return res.status(201).send({ token: service.createToken(user) });
+        console.log('10. listo');
+        return res.status(201).json({ token: service.createToken(user) });
     } catch (err) {
-        res.status(500).send({ message: `Error al registrar el nuevo usuario: ${err.message}` });
+        res.status(500).json({
+            message: `Error al registrar el nuevo usuario: ${err.message}`
+        });
     }
 }
 
 // Login
 function login(req, res) {
     if (!req.body.email || !req.body.password) {
-        return res
-            .status(422)
-            .send({
-                message: `Error al crear identificar el usuario: debes incluir el email y el password`
-            });
+        return res.status(422).json({
+            message:
+                'Error al identificar el usuario: debes incluir el email y el password'
+        });
     }
 
     User.findOne({ 'prof.e': req.body.email })
@@ -61,7 +65,7 @@ function login(req, res) {
             if (!user)
                 return res
                     .status(404)
-                    .send({ message: 'No se han encontrado registros' });
+                    .json({ message: 'No se han encontrado registros' });
 
             //console.log(user.password);
             // If match found, compare with stored password, using the bcrypt.compare function.
@@ -69,26 +73,24 @@ function login(req, res) {
                 .compare(req.body.password, user.password)
                 .then(result => {
                     if (result == true) {
-                        res.status(200).send({
+                        res.json({
                             message: 'Te has identificado correctamente',
                             token: service.createToken(user)
                         });
                     } else {
-                        res.status(422).send({
+                        res.status(422).json({
                             message: 'No te has identificado correctamente'
                         });
                     }
                 })
                 .catch(err =>
-                    res
-                        .status(500)
-                        .send({
-                            message: `Error al identificarse: ${err.message}`
-                        })
+                    res.status(500).json({
+                        message: `Error al identificarse: ${err.message}`
+                    })
                 );
         })
         .catch(err => {
-            res.status(500).send({
+            res.status(500).json({
                 message: `Error al identificarse: ${err.message}`
             });
         });

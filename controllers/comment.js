@@ -38,11 +38,11 @@ async function createComment(req, res) {
 function getComment(req, res) {
     Comm.findOne({ _id: req.params.id })
         .then(result => {
-            if (result == null) res.send('No se han encontrado registros');
-            else res.send(result);
+            if (!result) res.status(404).json({message: 'No se han encontrado registros'});
+            else res.json(result);
         })
         .catch(err => {
-            res.send(err);
+            res.status(500).json({message: err.message});
         });
 }
 
@@ -105,11 +105,11 @@ function updateComment(req, res) {
 
     Comm.updateOne({ _id: req.params.id }, comm)
         .then(result => {
-            if (result == null) res.send('No se han encontrado registros');
-            else res.send(result);
+            if (!result) res.status(404).json({message: 'No se han encontrado registros'});
+            else res.json(result);
         })
         .catch(err => {
-            res.send(err);
+            res.status(500).json({message: err.message});
         });
 }
 
@@ -125,9 +125,9 @@ async function addLike(req, res) {
             { $inc: { l: 1 }, $push: { ln: user.prof.n } }
         );
         if (!comm) throw new Error('No se ha encontrado el comentario');
-        else res.send(comm);
+        else res.json(comm);
     } catch (err) {
-        res.status(500).send({
+        res.status(500).json({
             message: `Ha habido un error al añadir el 'Me gusta': ${
                 err.message
             }`

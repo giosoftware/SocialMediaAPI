@@ -63,11 +63,11 @@ async function addPostToWalls(post, user) {
 function getPost(req, res) {
     Post.findOne({ _id: req.params.id })
         .then(result => {
-            if (result == null) res.send('No se han encontrado registros');
-            else res.send(result);
+            if (!result) res.status(404).json({message: 'No se han encontrado registros'});
+            else res.json(result);
         })
         .catch(err => {
-            res.send(err);
+            res.status(500).json({message: err.message});
         });
 }
 
@@ -121,11 +121,11 @@ function update(req, res) {
 
     Post.updateOne({ _id: req.params.id }, post)
         .then(result => {
-            if (result == null) res.send('No se han encontrado registros');
-            else res.send(result);
+            if (!result) res.status(404).json({message: 'No se han encontrado registros'});
+            else res.json(result);
         })
         .catch(err => {
-            res.send(err);
+            res.status(500).json({message: err.message});
         });
 }
 
@@ -141,9 +141,9 @@ async function addLike(req, res) {
             { $inc: { l: 1 }, $push: { ln: user.prof.n } }
         );
         if (!post) throw new Error('No se ha encontrado la publicación.');
-        else res.send(post);
+        else res.json(post);
     } catch (err) {
-        res.status(500).send({
+        res.status(500).json({
             message: `Ha habido un error al añadir el 'Me gusta': ${
                 err.message
             }`
