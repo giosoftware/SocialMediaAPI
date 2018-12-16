@@ -87,37 +87,3 @@ function getCurrentMonth() {
 }
 
 module.exports = { generateCurrentMonthWall };
-
-/*
-// SÓLO PARA PRUEBAS
-// Open db connection
-const config = require('../config/config');
-const mongoose = require('mongoose');
-mongoose.set('useCreateIndex', true); // To avoid DeprecationWarning
-mongoose.connect(
-    config.db,
-    { useNewUrlParser: true },
-    (err, res) => {
-        if (err) {
-            return console.log(`Error al conectar la bd: ${err}`);
-        }
-        console.log('Conexion establecida');
-    }
-);
-
-async function init() {
-    try {
-        let user;
-        // user = await User.findOne({fn: 'Cristina'})
-        console.log('EMPEZAMOS');
-        await generateCurrentMonthWall(user);
-        console.log('TERMINAMOS');
-    } catch (err) {
-        console.error('Init error: ' + err.message);
-    } finally {
-        mongoose.connection.close();
-    }
-}
-
-init();
-*/
