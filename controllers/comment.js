@@ -97,28 +97,31 @@ async function deleteComment(req, res) {
     }
 }
 
-function updateComment(req, res) {
-    const comm = {
-        uid: req.user,
-        n: req.body.nickname,
-        d: req.body.date,
-        t: req.body.text,
-        i: req.body.interests,
-        l: req.body.likes,
-        ln: req.body.likesNicknames
-    };
+async function updateComment(req, res) {
+    try {
+        const commId = req.params.id;
+        // Comprobamos que existe la publicación y que el usuario es el autor
+        let comm = await Comm.findOne({ _id: commId });
+        if (!comm) {
+            throw new Error('El comentario indicado no existe');
+        } else if (comm.uid != req.user) {
+            throw new Error(
+                'No puedes borrar los comentarios de otros usuarios'
+            );
+        }
 
-    Comm.updateOne({ _id: req.params.id }, comm)
-        .then(result => {
-            if (!result)
-                res.status(404).json({
-                    message: 'No se han encontrado registros'
-                });
-            else res.json(result);
-        })
-        .catch(err => {
-            res.status(500).json({ message: err.message });
-        });
+        comm = {
+            uid: req.user,
+            n: req.body.nickname,
+            t: req.body.text
+        };
+
+        const result = await Comm.updateOne({ _id: req.params.id }, comm)
+            
+        res.json(result);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
 }
 
 async function addLike(req, res) {
