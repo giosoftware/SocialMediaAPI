@@ -126,29 +126,35 @@ async function deletePost(req, res) {
 }
 
 /**
- * Actualiza el documento de la publicación
+ * Cuando un usuario actualiza una publicación hay que confirmar que es suya.
+ * Después de guardarla en su colección hay que actualizarla en los muros.
  */
-function updatePost(req, res) {
-    const post = {
-        uid: req.user,
-        n: req.body.nickname,
-        t: req.body.text,
-        i: req.body.interests,
-        l: req.body.likes,
-        ln: req.body.likesNicknames
-    };
+async function updatePost(req, res) {
+    try {
+        // Comprobamos que existe la publicación y que el usuario es el autor
+        const post = await Post.findOne({ _id: req.params.id });
+        if (!post) {
+            throw new Error('La publicación indicada no existe');
+        } else if (post.uid != req.user) {
+            throw new Error(
+                'No puedes actualizar las publicaciones de otros usuarios'
+            );
+        }
 
-    Post.updateOne({ _id: req.params.id }, post)
-        .then(result => {
-            if (!result)
-                res.status(404).json({
-                    message: 'No se han encontrado registros'
-                });
-            else res.json(result);
-        })
-        .catch(err => {
-            res.status(500).json({ message: err.message });
-        });
+        const result = await Post.updateOne(
+            { _id: req.params.id }, 
+            {t: req.body.text, i: req.body.interests}
+        );
+        // Actualizamos los muros
+        await Wall.updateMany(
+            { 'p._id': mongoose.Types.ObjectId(req.params.id) },
+            { $set: { 'p.$.t': req.body.text, 'p.$.i': req.body.interests } }
+        );
+
+        res.json(result); 
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }  
 }
 
 async function addLike(req, res) {
