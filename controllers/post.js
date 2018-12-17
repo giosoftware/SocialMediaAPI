@@ -29,15 +29,22 @@ async function createPost(req, res) {
     }
 }
 
-async function addPostToWalls(post, user) {
+async function addPostToWalls(post, userId) {
     var d = new Date();
     var month = '' + d.getUTCFullYear() + (d.getUTCMonth() + 1);
     try {
+        var currentUser = await User.findOne({_id: userId});
+        if (!currentUser) throw new Error('Error al añadir una publicación a los muros: no se ha encontrado el usuario actual');
+        
         var users = await User.find({
             $or: [
-                { _id: user },
+                { _id: currentUser._id },
                 {
-                    $and: [{ i: { $in: post.i } }, { b: { $nin: [user] } }]
+                    $and: [
+                        { i: { $in: post.i } }, 
+                        { b: { $nin: [currentUser._id] } },
+                        { _id: { $nin: currentUser.b } }
+                    ]
                 }
             ]
         });
