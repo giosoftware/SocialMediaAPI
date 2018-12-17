@@ -3,6 +3,7 @@
 const User = require('../models/user');
 
 function getUser(req, res) {
+    if (req.user !== req.params.id) return res.status(403).json({ message: 'No puedes acceder a los datos de otros usuarios' });
     User.findOne({ _id: req.params.id })
         .then(result => {
             if (!result) res.status(404).json({message: 'No se han encontrado registros'});
@@ -14,6 +15,7 @@ function getUser(req, res) {
 }
 
 function deleteUser(req, res) {
+    if (req.user !== req.params.id) return res.status(403).json({ message: 'No puedes borrar el perfil de otros usuarios' });
     User.deleteOne({ _id: req.params.id })
         .then(result => {
             if (!result) res.status(404).json({message: 'No se han encontrado registros'});
@@ -25,12 +27,13 @@ function deleteUser(req, res) {
 }
 
 function updateUser(req, res) {
+    if (req.user !== req.params.id) return res.status(403).json({ message: 'No puedes actualizar el perfil de otros usuarios' });
     const user = {
         fn: req.body.firstName,
         ln: req.body.lastName,
         prof: {
-            u: req.body.profile.nickname,
-            ps: req.body.profile.password,
+            n: req.body.profile.nickname,
+            p: req.body.profile.password,
             e: req.body.profile.email
         },
         i: req.body.interests,
