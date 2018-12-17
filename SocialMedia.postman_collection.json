@@ -21,7 +21,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/user/5c058803b2258105546ad661",
+							"raw": "http://localhost:3000/api/user/5c10d68c453fdb2d44a779f3",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -30,7 +30,7 @@
 							"path": [
 								"api",
 								"user",
-								"5c058803b2258105546ad661"
+								"5c10d68c453fdb2d44a779f3"
 							]
 						}
 					},
@@ -50,10 +50,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n        \"firstName\": \"Sergio\",\n        \"lastName\": \"Martín\",\n        \"profile\": {\n            \"username\": \"miliquito\",\n            \"password\": \"tétrada\",\n            \"email\": \"sermar@gmail.com\"\n        },\n        \"circles\": [\"public\", \"cars\"]\n    }"
+							"raw": "{\n    \"firstName\": \"Sergio\",\n    \"lastName\": \"Martín Ramírez\",\n    \"profile\": {\n        \"nickname\": \"smartin\",\n        \"password\": \"smartin\",\n        \"email\": \"smartin@gmail.com\"\n    },\n    \"interests\": [\"publico\", \"coches\"],\n    \"blocked\": [\"5c10fc7be0fc422f30b458f2\"]\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/user/5c058803b2258105546ad661?",
+							"raw": "http://localhost:3000/api/user/5c10d68c453fdb2d44a779f3",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -62,7 +62,7 @@
 							"path": [
 								"api",
 								"user",
-								"5c058803b2258105546ad661"
+								"5c10d68c453fdb2d44a779f3"
 							],
 							"query": [
 								{
@@ -90,7 +90,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/user/5c058803b2258105546ad661",
+							"raw": "http://localhost:3000/api/user/5c175076748be503d7e863ee",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -99,7 +99,7 @@
 							"path": [
 								"api",
 								"user",
-								"5c058803b2258105546ad661"
+								"5c175076748be503d7e863ee"
 							]
 						}
 					},
@@ -119,7 +119,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"interest\": \"phisics\"\n}"
+							"raw": "{\n\t\"interest\": \"viajes\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/user/addInterest",
@@ -334,7 +334,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"nickname\": \"smartin\",\n    \"text\": \"Post público sobre la revolución del CRISPR\",\n    \"interests\": [\"publico\"]\n}"
+							"raw": "{\n    \"nickname\": \"smartin\",\n    \"text\": \"¿El gazpacho es sólo para el verano?\",\n    \"interests\": [\"cocina\"]\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/post/",
@@ -372,7 +372,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/post/5c0fd2a99e2328037b8ec253",
+							"raw": "http://localhost:3000/api/post/5c177c264184480564f11f04",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -381,7 +381,7 @@
 							"path": [
 								"api",
 								"post",
-								"5c0fd2a99e2328037b8ec253"
+								"5c177c264184480564f11f04"
 							]
 						}
 					},
@@ -401,10 +401,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"sergio\",\n    \"text\": \"Esto es una prueba de post\",\n    \"interest\": [\"public\"],\n    \"likes\": 2,\n    \"likesNicknames\": [\"pepito\", \"antonino\"]\n}"
+							"raw": "{\n    \"nickname\": \"smartin\",\n    \"text\": \"¿El gazpacho es sólo para el verano?\",\n    \"interests\": [\"cocina\"]\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/post/5c0fd2a99e2328037b8ec253",
+							"raw": "http://localhost:3000/api/post/5c177c264184480564f11f04",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -413,7 +413,7 @@
 							"path": [
 								"api",
 								"post",
-								"5c0fd2a99e2328037b8ec253"
+								"5c177c264184480564f11f04"
 							]
 						}
 					},
@@ -423,13 +423,20 @@
 					"name": "Delete a post",
 					"request": {
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/post/5c17470da7a3a302c73a2207",
+							"raw": "http://localhost:3000/api/post/5c177c264184480564f11f04",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -438,7 +445,7 @@
 							"path": [
 								"api",
 								"post",
-								"5c17470da7a3a302c73a2207"
+								"5c177c264184480564f11f04"
 							]
 						}
 					},
@@ -458,7 +465,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"postId\": \"5c1748d842510a02d62a60ea\"\n}"
+							"raw": "{\n\t\"postId\": \"5c1780ecc9280318b8d9360b\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/post/addLike",
@@ -490,7 +497,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"postId\": \"5c1748d842510a02d62a60ea\"\n}"
+							"raw": "{\n\t\"postId\": \"5c1780ecc9280318b8d9360b\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/post/removeLike",
@@ -549,7 +556,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"nickname\": \"amolina\",\n    \"text\": \"No valen la pena\",\n    \"postId\": \"5c10fa60e0fc422f30b458ec\"\n}"
+							"raw": "{\n    \"nickname\": \"smartin\",\n    \"text\": \"Hombre. En verano es cuando más apetece\",\n    \"postId\": \"5c1780ecc9280318b8d9360b\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/comm/",
@@ -577,7 +584,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/comm/5c10b8c6dc62b7047d7f4f0c",
+							"raw": "http://localhost:3000/api/comm/5c1781d7d143532ee87ec28a",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -586,7 +593,7 @@
 							"path": [
 								"api",
 								"comm",
-								"5c10b8c6dc62b7047d7f4f0c"
+								"5c1781d7d143532ee87ec28a"
 							]
 						}
 					},
@@ -606,10 +613,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"userId\": \"5c0fc6e190cb7302c8cbccd2\",\n    \"nickname\": \"cmaresma\",\n    \"text\": \"Este es el texto corregido de un comentario\",\n    \"postId\": \"5c0fd2a99e2328037b8ec253\"\n}"
+							"raw": "{\n    \"nickname\": \"smartin\",\n    \"text\": \"Hombre. En invierno es cuando más apetece\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/comm/5c10b8c6dc62b7047d7f4f0c",
+							"raw": "http://localhost:3000/api/comm/5c1781d7d143532ee87ec28a",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -618,7 +625,7 @@
 							"path": [
 								"api",
 								"comm",
-								"5c10b8c6dc62b7047d7f4f0c"
+								"5c1781d7d143532ee87ec28a"
 							]
 						}
 					},
@@ -634,7 +641,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/comm/5c16915f4785ad09e4b245a2",
+							"raw": "http://localhost:3000/api/comm/5c1781d7d143532ee87ec28a",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -643,7 +650,7 @@
 							"path": [
 								"api",
 								"comm",
-								"5c16915f4785ad09e4b245a2"
+								"5c1781d7d143532ee87ec28a"
 							]
 						}
 					},
@@ -663,7 +670,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"commId\": \"5c161d2d4542c4048cd43db7\"\n}"
+							"raw": "{\n\t\"commId\": \"5c1781d7d143532ee87ec28a\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/comm/addLike",
@@ -695,7 +702,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"commId\": \"5c161d2d4542c4048cd43db7\"\n}"
+							"raw": "{\n\t\"commId\": \"5c1781d7d143532ee87ec28a\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/comm/removeLike",
@@ -742,12 +749,22 @@
 			"item": [
 				{
 					"name": "Get a wall",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": ""
+							"raw": "{\n\t\"month\": \"201812\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/wall",
