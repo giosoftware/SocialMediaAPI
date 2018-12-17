@@ -70,6 +70,9 @@ async function addPostToWalls(post, userId) {
     }
 }
 
+/**
+ * Devuelve el documento de la publicación especificada.
+ */
 function getPost(req, res) {
     Post.findOne({ _id: req.params.id })
         .then(result => {
@@ -122,9 +125,12 @@ async function deletePost(req, res) {
     }
 }
 
+/**
+ * Actualiza el documento de la publicación
+ */
 function updatePost(req, res) {
     const post = {
-        uid: req.body.userId,
+        uid: req.user,
         n: req.body.nickname,
         t: req.body.text,
         i: req.body.interests,
