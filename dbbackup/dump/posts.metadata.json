@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"socialmedia.posts"},{"v":2,"key":{"i":1.0},"name":"interests","ns":"socialmedia.posts"},{"v":2,"key":{"uid":1.0},"name":"userId","ns":"socialmedia.posts"},{"v":2,"key":{"d":1.0},"name":"date","ns":"socialmedia.posts"}],"uuid":"a12b9ce8fef04356a70baad03033d06b"}
