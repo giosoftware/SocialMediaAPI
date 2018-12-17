@@ -37,12 +37,9 @@ async function register(req, res) {
 
     try {
         // añadir el usuario a la colección users
-        console.log('1.gravo el usuario');
         await user.save();
         // Generar el muro para el mes en curso
-        console.log('2. genero el muro');
         await wall.generateCurrentMonthWall(user);
-        console.log('10. listo');
         return res.status(201).json({ token: service.createToken(user) });
     } catch (err) {
         res.status(500).json({
