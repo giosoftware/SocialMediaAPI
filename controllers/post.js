@@ -33,15 +33,18 @@ async function addPostToWalls(post, userId) {
     var d = new Date();
     var month = '' + d.getUTCFullYear() + (d.getUTCMonth() + 1);
     try {
-        var currentUser = await User.findOne({_id: userId});
-        if (!currentUser) throw new Error('Error al añadir una publicación a los muros: no se ha encontrado el usuario actual');
+        var currentUser = await User.findOne({ _id: userId });
+        if (!currentUser)
+            throw new Error(
+                'Error al añadir una publicación a los muros: no se ha encontrado el usuario actual'
+            );
 
         var users = await User.find({
             $or: [
                 { _id: currentUser._id },
                 {
                     $and: [
-                        { i: { $in: post.i } }, 
+                        { i: { $in: post.i } },
                         { b: { $nin: [currentUser._id] } },
                         { _id: { $nin: currentUser.b } }
                     ]
@@ -70,11 +73,14 @@ async function addPostToWalls(post, userId) {
 function getPost(req, res) {
     Post.findOne({ _id: req.params.id })
         .then(result => {
-            if (!result) res.status(404).json({message: 'No se han encontrado registros'});
+            if (!result)
+                res.status(404).json({
+                    message: 'No se han encontrado registros'
+                });
             else res.json(result);
         })
         .catch(err => {
-            res.status(500).json({message: err.message});
+            res.status(500).json({ message: err.message });
         });
 }
 
@@ -128,34 +134,78 @@ function updatePost(req, res) {
 
     Post.updateOne({ _id: req.params.id }, post)
         .then(result => {
-            if (!result) res.status(404).json({message: 'No se han encontrado registros'});
+            if (!result)
+                res.status(404).json({
+                    message: 'No se han encontrado registros'
+                });
             else res.json(result);
         })
         .catch(err => {
-            res.status(500).json({message: err.message});
+            res.status(500).json({ message: err.message });
         });
 }
 
 async function addLike(req, res) {
     try {
+        if (!req.body.postId) {
+            throw new Error(
+                `Error al añadir el 'Me gusta': debes especificar el ID de la publicación`
+            );
+        }
         const user = await User.findOne({ _id: req.user });
         if (!user)
             throw new Error(
                 'No se ha encontrado el usuario que ha realizado la acción.'
             );
         const post = await Post.updateOne(
-            { _id: req.body.postId },
+            { _id: req.body.postId, ln: { $ne: user.prof.n } },
             { $inc: { l: 1 }, $push: { ln: user.prof.n } }
         );
         if (!post) throw new Error('No se ha encontrado la publicación.');
-        else res.json(post);
+        // Actualizamos los muros
+        await Wall.updateMany(
+            { 'p._id': mongoose.Types.ObjectId(req.body.postId) },
+            { $addToSet: { 'p.$.ln': user.prof.n }, $inc: { 'p.$.l': 1 } }
+        );
+        res.json(post);
     } catch (err) {
-        res.status(500).json({
-            message: `Ha habido un error al añadir el 'Me gusta': ${
-                err.message
-            }`
-        });
+        res.status(500).json({ message: err.message });
     }
 }
 
-module.exports = { createPost, getPost, deletePost, updatePost, addLike };
+async function removeLike(req, res) {
+    try {
+        if (!req.body.postId) {
+            throw new Error(
+                `Error al añadir el 'Me gusta': debes especificar el ID de la publicación`
+            );
+        }
+        const user = await User.findOne({ _id: req.user });
+        if (!user)
+            throw new Error(
+                'No se ha encontrado el usuario que ha realizado la acción.'
+            );
+        const post = await Post.updateOne(
+            { _id: req.body.postId, ln: user.prof.n },
+            { $inc: { l: -1 }, $pull: { ln: user.prof.n } }
+        );
+        if (!post) throw new Error('No se ha encontrado la publicación.');
+        // Actualizamos los muros
+        const w = await Wall.updateMany(
+            { 'p._id': mongoose.Types.ObjectId(req.body.postId) },
+            { $pull: { 'p.$.ln': user.prof.n }, $inc: { 'p.$.l': -1 } }
+        );
+        res.json(post);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+}
+
+module.exports = {
+    createPost,
+    getPost,
+    deletePost,
+    updatePost,
+    addLike,
+    removeLike
+};

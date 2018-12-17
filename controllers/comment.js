@@ -1,5 +1,7 @@
 'use strict';
 
+const mongoose = require('mongoose');
+
 const Comm = require('../models/comment');
 const Wall = require('../models/wall');
 const User = require('../models/user');
@@ -38,11 +40,14 @@ async function createComment(req, res) {
 function getComment(req, res) {
     Comm.findOne({ _id: req.params.id })
         .then(result => {
-            if (!result) res.status(404).json({message: 'No se han encontrado registros'});
+            if (!result)
+                res.status(404).json({
+                    message: 'No se han encontrado registros'
+                });
             else res.json(result);
         })
         .catch(err => {
-            res.status(500).json({message: err.message});
+            res.status(500).json({ message: err.message });
         });
 }
 
@@ -105,27 +110,51 @@ function updateComment(req, res) {
 
     Comm.updateOne({ _id: req.params.id }, comm)
         .then(result => {
-            if (!result) res.status(404).json({message: 'No se han encontrado registros'});
+            if (!result)
+                res.status(404).json({
+                    message: 'No se han encontrado registros'
+                });
             else res.json(result);
         })
         .catch(err => {
-            res.status(500).json({message: err.message});
+            res.status(500).json({ message: err.message });
         });
 }
 
 async function addLike(req, res) {
     try {
+        if (!req.body.commId) {
+            throw new Error(
+                `Error al añadir el 'Me gusta': debes especificar el ID del comentario`
+            );
+        }
+        // Cargamos los datos del comentario
+        const comm = await Comm.findOne({ _id: req.body.commId });
+        if (!comm) {
+            throw new Error('El comentario indicado no existe');
+        }
+        // Cargamos los datos del usuario
         const user = await User.findOne({ _id: req.user });
         if (!user)
             throw new Error(
                 'No se ha encontrado el usuario que ha realizado la acción'
             );
-        const comm = await Comm.updateOne(
-            { _id: req.body.commId },
+        // Actualizamos el comentario
+        const result = await Comm.updateOne(
+            { _id: req.body.commId, ln: { $ne: user.prof.n } },
             { $inc: { l: 1 }, $push: { ln: user.prof.n } }
         );
-        if (!comm) throw new Error('No se ha encontrado el comentario');
-        else res.json(comm);
+        if (!result) throw new Error('No se ha encontrado el comentario');
+        // Actualizamos los muros
+        const w = await Wall.updateMany(
+            { 'p.c._id': mongoose.Types.ObjectId(req.body.commId) },
+            {
+                $addToSet: { 'p.$[x].c.$[y].ln': user.prof.n },
+                $inc: { 'p.$[x].c.$[y].l': 1 }
+            },
+            { arrayFilters: [{ 'x._id': comm.pid }, { 'y._id': comm._id }] }
+        );
+        res.json(result);
     } catch (err) {
         res.status(500).json({
             message: `Ha habido un error al añadir el 'Me gusta': ${
@@ -135,4 +164,54 @@ async function addLike(req, res) {
     }
 }
 
-module.exports = { createComment, getComment, deleteComment, updateComment, addLike };
+async function removeLike(req, res) {
+    try {
+        if (!req.body.commId) {
+            throw new Error(
+                `Error al añadir el 'Me gusta': debes especificar el ID del comentario`
+            );
+        }
+        // Cargamos los datos del comentario
+        const comm = await Comm.findOne({ _id: req.body.commId });
+        if (!comm) {
+            throw new Error('El comentario indicado no existe');
+        }
+        // Cargamos los datos del usuario
+        const user = await User.findOne({ _id: req.user });
+        if (!user)
+            throw new Error(
+                'No se ha encontrado el usuario que ha realizado la acción'
+            );
+        // Actualizamos el comentario
+        const result = await Comm.updateOne(
+            { _id: req.body.commId, ln: user.prof.n },
+            { $inc: { l: -1 }, $pull: { ln: user.prof.n } }
+        );
+        if (!result) throw new Error('No se ha encontrado el comentario');
+        // Actualizamos los muros
+        const w = await Wall.updateMany(
+            { 'p.c._id': mongoose.Types.ObjectId(req.body.commId) },
+            {
+                $pull: { 'p.$[x].c.$[y].ln': user.prof.n },
+                $inc: { 'p.$[x].c.$[y].l': -1 }
+            },
+            { arrayFilters: [{ 'x._id': comm.pid }, { 'y._id': comm._id }] }
+        );
+        res.json(result);
+    } catch (err) {
+        res.status(500).json({
+            message: `Ha habido un error al añadir el 'Me gusta': ${
+                err.message
+            }`
+        });
+    }
+}
+
+module.exports = {
+    createComment,
+    getComment,
+    deleteComment,
+    updateComment,
+    addLike,
+    removeLike
+};
