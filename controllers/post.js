@@ -35,7 +35,7 @@ async function addPostToWalls(post, userId) {
     try {
         var currentUser = await User.findOne({_id: userId});
         if (!currentUser) throw new Error('Error al añadir una publicación a los muros: no se ha encontrado el usuario actual');
-        
+
         var users = await User.find({
             $or: [
                 { _id: currentUser._id },
@@ -83,7 +83,7 @@ function getPost(req, res) {
  * Después hay que elimnarla de su colección, además de borrar los comentarios
  * relacionados. Después hay que elininar esa publicación de todos los muros.
  */
-async function del(req, res) {
+async function deletePost(req, res) {
     const postId = req.params.id;
     try {
         // Comprobamos que existe la publicación y que el usuario es el autor
@@ -116,7 +116,7 @@ async function del(req, res) {
     }
 }
 
-function update(req, res) {
+function updatePost(req, res) {
     const post = {
         uid: req.body.userId,
         n: req.body.nickname,
@@ -158,4 +158,4 @@ async function addLike(req, res) {
     }
 }
 
-module.exports = { createPost, getPost, del, update, addLike };
+module.exports = { createPost, getPost, deletePost, updatePost, addLike };
