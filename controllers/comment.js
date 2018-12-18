@@ -13,9 +13,15 @@ const User = require('../models/user');
  */
 async function createComment(req, res) {
     try {
+        // Cargamos los datos del usuario
+        const user = await User.findOne({ _id: req.user });
+        if (!user)
+            throw new Error(
+                'No se ha encontrado el usuario que ha realizado la acción'
+            );
         let comm = {
             uid: req.user,
-            n: req.body.nickname,
+            n: user.prof.n,
             t: req.body.text,
             pid: req.body.postId
         };
@@ -52,7 +58,7 @@ function getComment(req, res) {
 }
 
 /**
- * Cuando un usuario elimina un comentario hay que confirmar que es suyo.
+ * Cuando un usuario quiere eliminar un comentario hay que confirmar que es suyo.
  * Después hay que borrarlo de su colección.
  * También hay que borrarlo de la publicación a la que hace referencia en todos
  * los muros donde se encuentre. Si era uno de los útimos 3 comentarios, hay que
@@ -110,14 +116,22 @@ async function updateComment(req, res) {
             );
         }
 
-        comm = {
-            uid: req.user,
-            n: req.body.nickname,
-            t: req.body.text
-        };
-
-        const result = await Comm.updateOne({ _id: req.params.id }, comm)
-            
+        const result = await Comm.updateOne(
+            { _id: req.params.id },
+            { t: req.body.text }
+        );
+        
+        // Actualizar los comentarios en los mueros.
+        const w = await Wall.updateMany(
+            { 'p.c._id': mongoose.Types.ObjectId(req.params.id) },
+            { $set: { 'p.$[x].c.$[y].t': req.body.text } },
+            {
+                arrayFilters: [
+                    { 'x._id': comm.pid },
+                    { 'y._id': mongoose.Types.ObjectId(req.params.id) }
+                ]
+            }
+        );
         res.json(result);
     } catch (err) {
         res.status(500).json({ message: err.message });
@@ -149,7 +163,7 @@ async function addLike(req, res) {
         );
         if (!result) throw new Error('No se ha encontrado el comentario');
         // Actualizamos los muros
-        const w = await Wall.updateMany(
+        await Wall.updateMany(
             { 'p.c._id': mongoose.Types.ObjectId(req.body.commId) },
             {
                 $addToSet: { 'p.$[x].c.$[y].ln': user.prof.n },
