@@ -38,6 +38,7 @@ app.use('/api/', globalRoutes);
 | minute
 second ( optional )
 */
+//cron.schedule('1 * * * * *', function () {
 cron.schedule('* * * 1 * *', function() {
     console.log('---------------------');
     console.log(`Creamos los muros para este mes: ${Date()}`);
