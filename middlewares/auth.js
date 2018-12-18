@@ -2,6 +2,9 @@
 
 const service = require('../services/index');
 
+/**
+ * Comprueba que el usuario está autorizado 
+ */
 function isAuth(req, res, next) {
     if (!req.headers.authorization || req.headers.authorization === 'undefined') {
         return res.status(403).json({ message: 'No tienes autorización' });

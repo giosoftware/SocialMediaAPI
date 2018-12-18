@@ -8,9 +8,9 @@ const Wall = require('../models/wall');
 const Comm = require('../models/comment');
 
 /**
- * Cuando un usuario añade un post hay que crearlo en su colección. También hay
- * que añadirla en su muro y en todos los muros de los usuarios interesados,
- * exceptuando aquellos que han bloquedo al usuario.
+ * Crea una nueva publiación en su colección. También la añade en su muro y en 
+ * todos los muros de los usuarios interesados, exceptuando aquellos que han 
+ * bloquedo al usuario.
  */
 async function createPost(req, res) {
     try {
@@ -29,6 +29,10 @@ async function createPost(req, res) {
     }
 }
 
+/**
+ * Añade una publicación en todos los muros de los usuarios interesados, 
+ * excluyendo los muros de los usuarios que están bloqueados.
+ */
 async function addPostToWalls(post, userId) {
     var d = new Date();
     var month = '' + d.getUTCFullYear() + (d.getUTCMonth() + 1);
@@ -88,9 +92,8 @@ function getPost(req, res) {
 }
 
 /**
- * Cuando un usuario borra una publicación hay que confirmar que es suya.
- * Después hay que elimnarla de su colección, además de borrar los comentarios
- * relacionados. Después hay que elininar esa publicación de todos los muros.
+ * Elimina una publicación de su colección, además de borrar los comentarios
+ * relacionados. También elinina esa publicación de todos los muros.
  */
 async function deletePost(req, res) {
     const postId = req.params.id;
@@ -126,8 +129,8 @@ async function deletePost(req, res) {
 }
 
 /**
- * Cuando un usuario actualiza una publicación hay que confirmar que es suya.
- * Después de guardarla en su colección hay que actualizarla en los muros.
+ * Modifica la publicación especificada en el parámetro, además de actualizarla
+ * en los muros donde se encuentre.
  */
 async function updatePost(req, res) {
     try {
@@ -157,6 +160,10 @@ async function updatePost(req, res) {
     }  
 }
 
+/**
+ * Añade un like a la publicación especificada en el parámetro, tanto en su 
+ * colección como en los muros en donde se encuentre.
+ */
 async function addLike(req, res) {
     try {
         if (!req.body.postId) {
@@ -185,6 +192,10 @@ async function addLike(req, res) {
     }
 }
 
+/**
+ * Elimina el like de la publicación especificada en el parámetro, tanto en su
+ * colección como en los muros en donde se encuentre.
+ */
 async function removeLike(req, res) {
     try {
         if (!req.body.postId) {

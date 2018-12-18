@@ -7,9 +7,9 @@ const Wall = require('../models/wall');
 const User = require('../models/user');
 
 /**
- * Cuando un usuario añade un comentario hay que crearlo en su colección, además
- * de incorporarlo a la publicación a la que hace referencia en todos los muros
- * donde se encuentre. En el muro deben haber como máximo los 3 últimos commentarios.
+ * Añade un comentario a su colección, además de incorporarlo a la publicación a 
+ * la que hace referencia en todos los muros donde se encuentre. En el muro deben 
+ * estar como máximo los 3 últimos commentarios.
  */
 async function createComment(req, res) {
     try {
@@ -43,6 +43,9 @@ async function createComment(req, res) {
     }
 }
 
+/**
+ * Devuelve el documento del comentario especificado en el parámetro.
+ */
 function getComment(req, res) {
     Comm.findOne({ _id: req.params.id })
         .then(result => {
@@ -58,11 +61,10 @@ function getComment(req, res) {
 }
 
 /**
- * Cuando un usuario quiere eliminar un comentario hay que confirmar que es suyo.
- * Después hay que borrarlo de su colección.
- * También hay que borrarlo de la publicación a la que hace referencia en todos
- * los muros donde se encuentre. Si era uno de los útimos 3 comentarios, hay que
- * recuperar el siguiente más actual de la colección de comentarios.
+ * Elimina el comentario especificado en el parámetro
+ * También lo borra de la publicación a la que hace referencia en todos
+ * los muros donde se encuentra. Si era uno de los útimos 3 comentarios, se
+ * recupera el siguiente más actual de la colección de comentarios.
  */
 async function deleteComment(req, res) {
     try {
@@ -103,6 +105,10 @@ async function deleteComment(req, res) {
     }
 }
 
+/**
+ * Actualiza el texto del comentario especificado en el parámetro. Después de 
+ * guardarlo en la colección, lo actualiza en todos los muros en donde se encuentre.
+ */
 async function updateComment(req, res) {
     try {
         const commId = req.params.id;
@@ -138,6 +144,10 @@ async function updateComment(req, res) {
     }
 }
 
+/**
+ * Añade un like al comentario y registra el nick de usuario en el array ln (like 
+ * nicknames)
+ */
 async function addLike(req, res) {
     try {
         if (!req.body.commId) {
@@ -181,6 +191,9 @@ async function addLike(req, res) {
     }
 }
 
+/**
+ * Quita el like del comentario y elimina el nickname del usuario del array ln
+ */
 async function removeLike(req, res) {
     try {
         if (!req.body.commId) {

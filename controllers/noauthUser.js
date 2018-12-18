@@ -7,8 +7,8 @@ const service = require('../services/index');
 const wall = require('../admin/wall');
 
 /**
- * Cuando un nuevo usuario se registra en la red social, hay que añadir el usuario
- * a la colección users. Además hay que generarle un muro para el mes en curso
+ * Registra un nuevo usuario en la red social. Se le generará un muro para 
+ * el mes en curso y un jwt.
  */
 async function register(req, res) {
     if (
@@ -48,7 +48,9 @@ async function register(req, res) {
     }
 }
 
-// Login
+/**
+ * Identifica a un usuario mediante su email y su password y le devuelve un jwt
+ */
 function login(req, res) {
     if (!req.body.email || !req.body.password) {
         return res.status(422).json({
