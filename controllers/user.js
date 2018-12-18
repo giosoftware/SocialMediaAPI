@@ -77,6 +77,7 @@ function updateUser(req, res) {
         if (user.n !== newData.prof.n) {
             Post.updateMany({ n: user.n }, { $set: { n: newData.prof.n } });
             Comm.updateMany({ n: user.n }, { $set: { n: newData.prof.n } });
+            Walls.updateMany({'p.n': "smartin"},{ $set: { 'p.$.n': "smartinr"} } );
         }
 
         res.json(result);
