@@ -9,3 +9,11 @@ dbbackup/dump/socialmedia/comments.bson
 dbbackup/dump/socialmedia/posts.bson
 dbbackup/dump/socialmedia/users.bson
 dbbackup/dump-restore.txt
+dbbackup/dump/walls.metadata.json
+dbbackup/dump/comments.bson
+dbbackup/dump/comments.metadata.json
+dbbackup/dump/posts.bson
+dbbackup/dump/posts.metadata.json
+dbbackup/dump/users.bson
+dbbackup/dump/users.metadata.json
+dbbackup/dump/walls.bson
