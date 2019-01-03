@@ -2,8 +2,10 @@ Author: Sergio Martín Ramírez
 Date last update: 18-12-2018
 
 The project consists of a simple API for a social network where users
-can write publications and comments to existing publications. The author
-of a publication can tag it with descriptive words so that others
+can write publications and comments to existing publications. It uses 
+Node.js, Express and MongoDB.
+
+The author of a publication can tag it with descriptive words so that others
 users can visualize it in their walls according to the interests that have been
 subscribed. The publications and their comments can be evaluated with a "Like".
 
@@ -28,10 +30,13 @@ Autor: Sergio Martín Ramírez
 Fecha última actualización: 18-12-2018
 
 El proyecto consiste en una sencilla API para una red social donde los usuarios 
-pueden escribir publicaciones y comentarios a publicaciones existentes. El autor 
-de una publicación la etiquetará con una palabra descriptiva para que otros 
-usuarios puedan visualizarla en sus muros según los intereses a los que se haya 
-suscrito. Las publicaciones y sus comentarios pueden ser valorardos con un "Me gusta".
+pueden escribir publicaciones y comentarios a publicaciones existentes. Utiliza
+Node.js, Express y MongoDb.
+
+El autor de una publicación la etiquetará con una palabra descriptiva para que 
+otros usuarios puedan visualizarla en sus muros según los intereses a los que se 
+haya suscrito. Las publicaciones y sus comentarios pueden ser valorardos con un 
+"Me gusta".
 
 Para que un usuario pueda utilizar la red social tendrá que haberse registrado 
 previamente. Una vez autorizado, pordrá descargar su muro, donde estarán sus 
