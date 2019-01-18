@@ -13,13 +13,13 @@ const Post = require('../models/post');
 function getUser(req, res) {
     if (req.user !== req.params.id)
         return res.status(403).json({
-            message: 'No puedes acceder a los datos de otros usuarios'
+            message: 'You can not access to other users data'
         });
     User.findOne({ _id: req.params.id })
         .then(result => {
             if (!result)
                 res.status(404).json({
-                    message: 'No se han encontrado registros'
+                    message: 'No records found'
                 });
             else res.json(result);
         })
@@ -35,12 +35,12 @@ function deleteUser(req, res) {
     if (req.user !== req.params.id)
         return res
             .status(403)
-            .json({ message: 'No puedes borrar el perfil de otros usuarios' });
+            .json({ message: 'You cannot delete other users profile' });
     User.deleteOne({ _id: req.params.id })
         .then(result => {
             if (!result)
                 res.status(404).json({
-                    message: 'No se han encontrado registros'
+                    message: 'No records found'
                 });
             else res.json(result);
         })
@@ -57,7 +57,7 @@ function deleteUser(req, res) {
 async function updateUser(req, res) {
     if (req.user !== req.params.id) {
         return res.status(403).json({
-            message: 'No puedes actualizar el perfil de otros usuarios'
+            message: 'You cannot update other users profile'
         });
     }
     try {
@@ -65,7 +65,7 @@ async function updateUser(req, res) {
         if (!user) {
             return res.status(404).json({
                 message:
-                    'No se ha encontrado el registro de usuario a modificar.'
+                    'The user record to be modified has not been found'
             });
         }
         const oldNickname = user.prof.n;
@@ -84,7 +84,7 @@ async function updateUser(req, res) {
         const result = await User.updateOne({ _id: req.params.id }, newData);
         if (!result) {
             return res.status(404).json({
-                message: 'No se han encontrado registros'
+                message: 'No records found'
             });
         }
         /**
@@ -92,20 +92,17 @@ async function updateUser(req, res) {
          * comentarios y muros.
          */
         if (oldNickname !== newData.prof.n) {
-            console.log('el nick ha cambiado');
-            console.log('Old newName: ' + oldNickname + ', New nickname: ' + newData.prof.n);
             const p = await Post.updateMany({ uid: req.user }, { n: newData.prof.n });
             const c = await Comm.updateMany({ uid: req.user }, { n: newData.prof.n });
             const w1 = await Wall.updateOne({ uid: req.user }, { n: newData.prof.n });
             const w2 = await Wall.updateMany({ "p.uid": mongoose.Types.ObjectId(req.user) }, { $set: { "p.$.n": newData.prof.n } });
             const w3 = await Wall.updateMany({ "p.c.uid": mongoose.Types.ObjectId(req.user) }, { $set: { "p.$.c.$[].n": newData.prof.n } });
-            console.log(p); console.log(c); console.log(w1); console.log(w2); console.log(w3);
         }
 
         res.json(result);
     } catch (err) {
         res.status(500).json({
-            message: `Ha habido un error al actualizar el usuario: ${err.message}`
+            message: `There was an error updating the user: ${err.message}`
         });
     }
 }
@@ -119,7 +116,7 @@ function addInterest(req, res) {
         .then(result => {
             if (!result)
                 res.status(404).json({
-                    message: 'No se han encontrado registros'
+                    message: 'No records found'
                 });
             else res.json(result);
         })
@@ -137,7 +134,7 @@ function blockUser(req, res) {
         .then(result => {
             if (!result)
                 res.status(404).json({
-                    message: 'No se han encontrado registros'
+                    message: 'No records found'
                 });
             else res.json(result);
         })

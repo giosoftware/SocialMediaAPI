@@ -9,7 +9,7 @@ function getWall(req, res) {
     const month = req.body.month;
     Wall.findOne({ uid: req.user, m: month })
         .then(result => {
-            if (!result) res.status(404).json({message: 'No se han encontrado registros'});
+            if (!result) res.status(404).json({message: 'No records found'});
             else res.json(result);
         })
         .catch(err => {

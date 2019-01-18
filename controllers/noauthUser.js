@@ -21,7 +21,7 @@ async function register(req, res) {
         !req.body.interests
     ) {
         return res.status(422).json({
-            message: 'Error al crear el usuario: debes incluir todos los datos'
+            message: 'Error creating the user: you must enter all required data'
         });
     }
 
@@ -44,7 +44,7 @@ async function register(req, res) {
         return res.status(201).json({ token: service.createToken(user) });
     } catch (err) {
         res.status(500).json({
-            message: `Error al registrar el nuevo usuario: ${err.message}`
+            message: `Error registering the new user: ${err.message}`
         });
     }
 }
@@ -56,7 +56,7 @@ function login(req, res) {
     if (!req.body.email || !req.body.password) {
         return res.status(422).json({
             message:
-                'Error al identificar el usuario: debes incluir el email y el password'
+                'Error identifying the user: you must include the email and password'
         });
     }
 
@@ -65,7 +65,7 @@ function login(req, res) {
             if (!user)
                 return res
                     .status(404)
-                    .json({ message: 'El usuario no existe' });
+                    .json({ message: "The user doesn't exists" });
 
             //console.log(user.password);
             // If match found, compare with stored password, using the bcrypt.compare function.
@@ -74,24 +74,24 @@ function login(req, res) {
                 .then(result => {
                     if (result == true) {
                         res.json({
-                            message: 'Te has identificado correctamente',
+                            message: 'You have correctly identified',
                             token: service.createToken(user)
                         });
                     } else {
                         res.status(422).json({
-                            message: 'No te has identificado correctamente'
+                            message: 'You have not identified correctly'
                         });
                     }
                 })
                 .catch(err =>
                     res.status(500).json({
-                        message: `Error al identificarse: ${err.message}`
+                        message: `Error trying to login: ${err.message}`
                     })
                 );
         })
         .catch(err => {
             res.status(500).json({
-                message: `Error al identificarse: ${err.message}`
+                message: `Error trying to login: ${err.message}`
             });
         });
 }

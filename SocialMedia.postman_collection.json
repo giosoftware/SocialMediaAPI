@@ -257,7 +257,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"message\": \"Te has identificado correctamente\",\n    \"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1YzBmYTJlNzFhZDUyMTM1OTQ5ZThkZWQiLCJpYXQiOjE1NDQ1MzA1MTQsImV4cCI6MTU0NTc0MDExNH0.VGEUGm6VbRnz6p9RG59L1RaxbIFl3GfHJKFMcjXWIRQ\"\n}"
+							"body": "{\n    \"message\": \"You have correctly identified\",\n    \"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1YzBmYTJlNzFhZDUyMTM1OTQ5ZThkZWQiLCJpYXQiOjE1NDQ1MzA1MTQsImV4cCI6MTU0NTc0MDExNH0.VGEUGm6VbRnz6p9RG59L1RaxbIFl3GfHJKFMcjXWIRQ\"\n}"
 						}
 					]
 				},

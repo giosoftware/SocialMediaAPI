@@ -51,7 +51,7 @@ cron.schedule('* * * 1 * *', function() {
      */
         admin.generateCurrentMonthWall().catch(err => {
             console.error(
-                `Ha habido un error al generar los muros del mes: ${
+                `There was an error generating current month's walls: ${
                     err.message
                 }`
             );
@@ -59,5 +59,5 @@ cron.schedule('* * * 1 * *', function() {
 });
 
 app.listen(config.port, () => {
-    console.log(`API REST corriendo en http://localhost:${config.port}`);
+    console.log(`API REST running on http://localhost:${config.port}`);
 });

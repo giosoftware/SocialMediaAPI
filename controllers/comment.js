@@ -51,7 +51,7 @@ function getComment(req, res) {
         .then(result => {
             if (!result)
                 res.status(404).json({
-                    message: 'No se han encontrado registros'
+                    message: 'No records found'
                 });
             else res.json(result);
         })
@@ -184,7 +184,7 @@ async function addLike(req, res) {
         res.json(result);
     } catch (err) {
         res.status(500).json({
-            message: `Ha habido un error al añadir el 'Me gusta': ${
+            message: `There was an error saving your 'Like': ${
                 err.message
             }`
         });
@@ -198,26 +198,26 @@ async function removeLike(req, res) {
     try {
         if (!req.body.commId) {
             throw new Error(
-                `Error al añadir el 'Me gusta': debes especificar el ID del comentario`
+                `There was an error removing your 'Like': unknown comment ID`
             );
         }
         // Cargamos los datos del comentario
         const comm = await Comm.findOne({ _id: req.body.commId });
         if (!comm) {
-            throw new Error('El comentario indicado no existe');
+            throw new Error('The specified comment does not exist');
         }
         // Cargamos los datos del usuario
         const user = await User.findOne({ _id: req.user });
         if (!user)
             throw new Error(
-                'No se ha encontrado el usuario que ha realizado la acción'
+                'The user who performed the action was not found'
             );
         // Actualizamos el comentario
         const result = await Comm.updateOne(
             { _id: req.body.commId, ln: user.prof.n },
             { $inc: { l: -1 }, $pull: { ln: user.prof.n } }
         );
-        if (!result) throw new Error('No se ha encontrado el comentario');
+        if (!result) throw new Error('The comment was not found');
         // Actualizamos los muros
         const w = await Wall.updateMany(
             { 'p.c._id': mongoose.Types.ObjectId(req.body.commId) },
@@ -230,7 +230,7 @@ async function removeLike(req, res) {
         res.json(result);
     } catch (err) {
         res.status(500).json({
-            message: `Ha habido un error al añadir el 'Me gusta': ${
+            message: `There was an error saving your 'Like': ${
                 err.message
             }`
         });

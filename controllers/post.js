@@ -82,7 +82,7 @@ function getPost(req, res) {
         .then(result => {
             if (!result)
                 res.status(404).json({
-                    message: 'No se han encontrado registros'
+                    message: 'No records found'
                 });
             else res.json(result);
         })
