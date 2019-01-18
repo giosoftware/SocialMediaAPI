@@ -11,12 +11,13 @@ const wall = require('../admin/wall');
  * el mes en curso y un jwt.
  */
 async function register(req, res) {
+    console.log(req.body);
     if (
         !req.body.firstName ||
         !req.body.lastName ||
-        !req.body.profile.email ||
-        !req.body.profile.password ||
-        !req.body.profile.nickname ||
+        !req.body.email ||
+        !req.body.password ||
+        !req.body.nickname ||
         !req.body.interests
     ) {
         return res.status(422).json({
@@ -28,9 +29,9 @@ async function register(req, res) {
         fn: req.body.firstName,
         ln: req.body.lastName,
         prof: {
-            e: req.body.profile.email,
-            p: req.body.profile.password,
-            n: req.body.profile.nickname
+            e: req.body.email,
+            p: req.body.password,
+            n: req.body.nickname
         },
         i: req.body.interests
     });
@@ -64,7 +65,7 @@ function login(req, res) {
             if (!user)
                 return res
                     .status(404)
-                    .json({ message: 'No se han encontrado registros' });
+                    .json({ message: 'El usuario no existe' });
 
             //console.log(user.password);
             // If match found, compare with stored password, using the bcrypt.compare function.
