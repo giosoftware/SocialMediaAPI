@@ -3,6 +3,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cron = require('node-cron');
+const cors = require('cors');
 
 const admin = require('./admin/wall');
 const config = require('./config/config');
@@ -20,6 +21,8 @@ mongoose.connect(config.db, { useNewUrlParser: true })
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(cors())
 
 // Usamos un enrutador global
 app.use('/api/', globalRoutes);
