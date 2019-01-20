@@ -1,5 +1,4 @@
 Author: Sergio Martín Ramírez
-Date last update: 18-12-2018
 
 The project consists of a simple API for a social network where users
 can write publications and comments to existing publications. It uses 
@@ -27,7 +26,6 @@ restore with mongodbrestore --db socialmedia
 -------------
 
 Autor: Sergio Martín Ramírez 
-Fecha última actualización: 18-12-2018
 
 El proyecto consiste en una sencilla API para una red social donde los usuarios 
 pueden escribir publicaciones y comentarios a publicaciones existentes. Utiliza
