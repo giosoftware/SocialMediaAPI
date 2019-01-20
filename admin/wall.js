@@ -3,7 +3,6 @@
 const Wall = require('../models/wall');
 const User = require('../models/user');
 const Post = require('../models/post');
-const Comm = require('../models/comment');
 
 /**
  * Esta función es llamada por el Cron el primero de mes para crear los documentos
